@@ -1,0 +1,30 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  openapi/einride-book-openapi-original.yml, openapi/einride-auth-openapi-original.yml,
+  https://extend.saga.einride.tech
+docs: https://github.com/einride/extend/blob/master/docs/apis.md
+summary:
+  types:
+  - bearer
+  api_key_in:
+  - header
+  flow: client-credentials (secret exchange for short-lived bearer token)
+model:
+  description: >-
+    Einride Extend uses standard Bearer token authentication. An integration is issued a
+    client ID and client secret by an Einride representative, then exchanges them for a
+    short-lived access token via AuthenticationService_ExchangeSecret. The returned
+    accessToken is sent as `Authorization: Bearer <token>` on all subsequent HTTP (or gRPC)
+    calls and refreshed before its expireTime.
+  token_endpoint_operation: AuthenticationService_ExchangeSecret
+  credential_source: Contact your Einride representative to obtain a client ID and client secret.
+schemes:
+- name: Authorization
+  type: http
+  scheme: bearer
+  in: header
+  parameter: authorization
+  sources:
+  - openapi/einride-book-openapi-original.yml
+  - openapi/einride-auth-openapi-original.yml
