@@ -1,0 +1,682 @@
+swagger: '2.0'
+info:
+  title: 'Einride Extend: Authentication AuthenticationService ShipmentService API'
+  description: "Based on REST principles, with optional support for gRPC, the Einride Extend API enables modern API-based integration to Einride Saga.\n\nAPI design\n----------\n\nThe Einride Extend APIs are designed using the [AIP](https://aip.dev) design framework, which means that they are resource-oriented and work like standard [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) APIs.\n\n### Resource-oriented design\n\n*See also: [AIP-121: Resource-oriented design](https://google.aip.dev/121)*\n\nThe fundamental building blocks of this API are individually-named resources (nouns) and the relationships and hierarchy that exist between them.\n\nA number of standard methods (verbs) provide the semantics for common [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations. Custom methods are available where custom operations are required, such as for cancelling shipments.\n\n### Resource names\n\n*See also: [AIP-122: Resource names](https://google.aip.dev/122)*\n\nThis API exposes resources which users are able to create, retrieve, and manipulate. Resources are named: each resource has a unique identifier that users use to reference that resource, and these names are what users should store as the canonical names for the resources.\n\nAs such, the unique identifier for a resource in this API is called a *resource name*.\n\nProtocols\n---------\n\nThe Einride Extend APIs support both HTTP and gRPC protocols.\n\n### HTTP\n\nThe Einride Extend APIs are available as RESTful HTTP endpoints.\n\nSee this document for the OpenAPI specifications, or use the API documentation at [extend.saga.einride.tech](https://extend.saga.einride.tech), where you can also try out the REST APIs and make example requests.\n\n### gRPC\n\n[gRPC](https://grpc.io) is a high performance, open source universal RPC framework that works across programming languages and platforms.\n\nTo for more information about using Einride Extend APIs via gRPC, please contact your Einride representative.\n\nAuthentication\n---------\n\nThe Einride Extend use standard [Bearer token authentication](https://swagger.io/docs/specification/authentication/bearer-authentication/). When using the HTTP APIs, make sure to always provide the following header in all requests:\n\n\n    Authorization: Bearer <token>\n\n\nWhere `<token>` is the authentication token for your integration. \n\n\nObtain a short-lived authentication token by using the ExchangeSecret API documented below. \n\n\nPlease contact your Einride representative to obtain a client ID and client secret for your integration. \n\nAPI address\n---------\n\nThe Einride Extend API is available via the following root address:\n\nhttps://api.saga.einride.tech\n"
+  version: v1beta1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: ShipmentService
+paths:
+  /v1beta1/{parent}/shipments:
+    get:
+      summary: List shipments in a space.
+      description: This is an AIP standard [List](https://google.aip.dev/132) method.
+      operationId: ShipmentService_ListShipments
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1ListShipmentsResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: parent
+        description: 'The resource name of the parent, which owns this collection of shipments.
+
+          Format: spaces/{space}'
+        in: path
+        required: true
+        type: string
+        pattern: spaces/[^/]+
+      - name: pageSize
+        description: 'Requested page size. Server may return fewer shipments than requested.
+
+          If unspecified, server will pick an appropriate default.'
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: pageToken
+        description: 'A token identifying a page of results the server should return.
+
+          Typically, this is the value of ListShipmentsResponse.page_token
+
+          returned from the previous call to `ListShipments` method.'
+        in: query
+        required: false
+        type: string
+      - name: orderBy
+        description: 'How the results should be sorted. Presently, the only permitted values are:
+
+
+          - `"create_time desc"` (default if no order_by is specified)
+
+          - `"create_time asc"`
+
+          Example:
+
+          ```
+
+          order_by = "create_time desc"
+
+          ``'
+        in: query
+        required: false
+        type: string
+      - name: showDeleted
+        description: Controls whether deleted shipments should be returned. Defaults to false.
+        in: query
+        required: false
+        type: boolean
+      - name: skip
+        description: Allows to skip results.
+        in: query
+        required: false
+        type: integer
+        format: int32
+      tags:
+      - ShipmentService
+  /v1beta1/{shipment.name}:
+    patch:
+      summary: Update a shipment in a space.
+      description: This is an AIP standard [Update](https://google.aip.dev/134) method.
+      operationId: ShipmentService_UpdateShipment
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: shipment.name
+        description: The resource name of the shipment.
+        in: path
+        required: true
+        type: string
+        pattern: spaces/[^/]+/shipments/[^/]+
+      - name: shipment
+        description: The resource which replaces the current resource.
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            space:
+              type: string
+              description: Resource name of the space that owns the shipment.
+              readOnly: true
+            sender:
+              type: string
+              description: Resource name of the sender of the shipment.
+            createTime:
+              type: string
+              format: date-time
+              description: The creation timestamp of the shipment.
+              readOnly: true
+            updateTime:
+              type: string
+              format: date-time
+              description: 'The last update timestamp of the shipment.
+
+                Updated when create/update/delete operation is performed.'
+              readOnly: true
+            deleteTime:
+              type: string
+              format: date-time
+              description: The deletion timestamp of the shipment. Set if the shipment is deleted.
+              readOnly: true
+            trackingId:
+              type: string
+              description: A generated tracking ID for this shipment.
+              readOnly: true
+            pickupAddress:
+              $ref: '#/definitions/v1beta1Address'
+              description: 'The address where the shipment is picked up.
+
+                Supply when creating shipment if different from the sender default pickup address.'
+            pickupInstructions:
+              type: string
+              description: Instructions for the pickup.
+            requestedPickupStartTime:
+              type: string
+              format: date-time
+              title: The shipment should be picked up after this time
+            requestedPickupEndTime:
+              type: string
+              format: date-time
+              title: The shipment should be picked up before this time
+            deliveryAddress:
+              $ref: '#/definitions/v1beta1Address'
+              description: The address where the shipment is delivered to.
+            deliveryInstructions:
+              type: string
+              description: Instructions for the delivery.
+            requestedDeliveryStartTime:
+              type: string
+              format: date-time
+              title: The shipment should be delivered after this time
+            requestedDeliveryEndTime:
+              type: string
+              format: date-time
+              title: The shipment should be delivered before this time
+            units:
+              type: array
+              items:
+                type: object
+                $ref: '#/definitions/bookv1beta1Unit'
+              title: Shipment units
+            externalReferenceId:
+              type: string
+              description: An external reference for this shipment. If supplied then it must be unique within the space.
+            tour:
+              type: string
+              description: Resource name of the truck tour booking this shipment relates to.
+            state:
+              $ref: '#/definitions/v1beta1ShipmentState'
+              description: 'Shipment state
+
+                Can be set to ACTIVE (default) or RELEASED when creating a shipment.
+
+                Disabled as existing API allows setting.'
+            deliveryState:
+              $ref: '#/definitions/ShipmentDeliveryState'
+              title: Shipment delivery state
+              readOnly: true
+            vehicle:
+              $ref: '#/definitions/v1beta1Vehicle'
+              title: Vehicle information for the shipment
+            annotations:
+              type: object
+              additionalProperties:
+                type: string
+              title: Annotations for the shipment
+            service:
+              $ref: '#/definitions/ShipmentService'
+              title: Shipment service, defaults to PALLET
+          title: The resource which replaces the current resource.
+          required:
+          - sender
+          - deliveryAddress
+          - units
+          - shipment
+      tags:
+      - ShipmentService
+  /v1beta1/{shipment}:
+    get:
+      summary: Get a shipment.
+      description: This is an AIP standard [Get](https://google.aip.dev/131) method.
+      operationId: ShipmentService_GetShipment
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: shipment
+        description: The resource name of the shipment to retrieve.
+        in: path
+        required: true
+        type: string
+        pattern: spaces/[^/]+/shipments/[^/]+
+      tags:
+      - ShipmentService
+  /v1beta1/{shipment}:cancel:
+    post:
+      summary: Cancel a shipment.
+      description: 'The state of the shipment after cancelling it is CANCELLED.
+
+
+        This is an AIP [state](https://google.aip.dev/216) transition method.'
+      operationId: ShipmentService_CancelShipment
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: shipment
+        description: The resource name of the shipment to cancel.
+        in: path
+        required: true
+        type: string
+        pattern: spaces/[^/]+/shipments/[^/]+
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ShipmentServiceCancelShipmentBody'
+      tags:
+      - ShipmentService
+  /v1beta1/{shipment}:release:
+    post:
+      summary: Release a shipment.
+      description: 'The state of the shipment after releasing it is RELEASED.
+
+
+        This is an AIP [state](https://google.aip.dev/216) transition method.'
+      operationId: ShipmentService_ReleaseShipment
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: shipment
+        description: The resource name of the shipment to release.
+        in: path
+        required: true
+        type: string
+        pattern: spaces/[^/]+/shipments/[^/]+
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ShipmentServiceReleaseShipmentBody'
+      tags:
+      - ShipmentService
+  /v1beta1/{space}/shipments:
+    post:
+      summary: Create a shipment in a space.
+      description: This is an AIP standard [Create](https://google.aip.dev/133) method.
+      operationId: ShipmentService_CreateShipment
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: space
+        description: The parent space in which to create the shipment.
+        in: path
+        required: true
+        type: string
+        pattern: spaces/[^/]+
+      - name: shipment
+        description: The shipment to create.
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/v1beta1Shipment'
+          required:
+          - shipment
+      tags:
+      - ShipmentService
+definitions:
+  UnitWeight:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+        title: Weight value
+      unit:
+        $ref: '#/definitions/UnitWeightUnit'
+        title: Weight unit
+    title: Weight specified in different units
+    required:
+    - value
+    - unit
+  UnitVolume:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+        title: Volume value
+      unit:
+        $ref: '#/definitions/UnitVolumeUnit'
+        title: Volume unit
+    title: Volume specified in different units
+    required:
+    - value
+    - unit
+  v1beta1Vehicle:
+    type: object
+    properties:
+      referenceId:
+        type: string
+        title: Reference id
+      driverReferenceId:
+        type: string
+        title: Driver reference id
+      carrierReferenceId:
+        type: string
+        title: Carrier reference id
+    title: Holds vehicle information
+    required:
+    - referenceId
+  v1beta1ListShipmentsResponse:
+    type: object
+    properties:
+      shipments:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1beta1Shipment'
+        description: The list of shipments.
+      nextPageToken:
+        type: string
+        description: 'A token to retrieve next page of results.  Pass this value in the ListShipmentsRequest.page_token field in the
+
+          subsequent call to `ListShipments` method to retrieve the next page of results.'
+      totalSize:
+        type: integer
+        format: int32
+        description: The total size of shipments found in a space.
+    description: Response message for ShipmentService.ListShipments.
+  bookv1beta1Unit:
+    type: object
+    properties:
+      type:
+        type: string
+        title: Type of unit
+      externalReferenceId:
+        type: string
+        title: External reference ID of the unit
+      description:
+        type: string
+        title: Description of the unit
+      trackingId:
+        type: string
+        title: Unique unit tracking ID
+        readOnly: true
+      weight:
+        $ref: '#/definitions/UnitWeight'
+        title: Unit weight
+      length:
+        $ref: '#/definitions/UnitLength'
+        title: Unit length
+      height:
+        $ref: '#/definitions/UnitLength'
+        title: Unit height
+      width:
+        $ref: '#/definitions/UnitLength'
+        title: Unit width
+      volume:
+        $ref: '#/definitions/UnitVolume'
+        title: Unit volume
+    description: A unit is a holder of goods such as a EUR-pallet.
+    required:
+    - type
+    - weight
+  v1beta1Address:
+    type: object
+    properties:
+      recipient:
+        type: string
+        title: Recipient
+      co:
+        type: string
+        title: Care of (C/O)
+      line1:
+        type: string
+        title: Address line 1
+      line2:
+        type: string
+        title: Address line 2
+      postalCode:
+        type: string
+        title: Postal code
+      city:
+        type: string
+        title: City
+      regionCode:
+        type: string
+        title: 'Region code (Unicode CLDR region code)
+
+          https://cldr.unicode.org/'
+      stateCode:
+        type: string
+        title: State code
+      displayName:
+        type: string
+        title: The displayed name of the address
+      contactInfo:
+        type: string
+        title: Contact information
+      latLng:
+        $ref: '#/definitions/typeLatLng'
+        title: The geographic location of the address
+      externalReferenceId:
+        type: string
+        description: An external reference for this address.
+    description: An Address is where goods are picked up or delivered.
+    required:
+    - recipient
+    - line1
+    - postalCode
+    - city
+    - regionCode
+  ShipmentService:
+    type: string
+    enum:
+    - PALLET
+    - FTL
+    - DRAYAGE
+    description: "- PALLET: Pallet\n - FTL: Full truck load\n - DRAYAGE: Drayage is the transport of goods over a short distance also known as the \"The first mile.\""
+    title: Shipment service type
+  protobufAny:
+    type: object
+    properties:
+      '@type':
+        type: string
+    additionalProperties: {}
+  v1beta1Shipment:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The resource name of the shipment.
+      space:
+        type: string
+        description: Resource name of the space that owns the shipment.
+        readOnly: true
+      sender:
+        type: string
+        description: Resource name of the sender of the shipment.
+      createTime:
+        type: string
+        format: date-time
+        description: The creation timestamp of the shipment.
+        readOnly: true
+      updateTime:
+        type: string
+        format: date-time
+        description: 'The last update timestamp of the shipment.
+
+          Updated when create/update/delete operation is performed.'
+        readOnly: true
+      deleteTime:
+        type: string
+        format: date-time
+        description: The deletion timestamp of the shipment. Set if the shipment is deleted.
+        readOnly: true
+      trackingId:
+        type: string
+        description: A generated tracking ID for this shipment.
+        readOnly: true
+      pickupAddress:
+        $ref: '#/definitions/v1beta1Address'
+        description: 'The address where the shipment is picked up.
+
+          Supply when creating shipment if different from the sender default pickup address.'
+      pickupInstructions:
+        type: string
+        description: Instructions for the pickup.
+      requestedPickupStartTime:
+        type: string
+        format: date-time
+        title: The shipment should be picked up after this time
+      requestedPickupEndTime:
+        type: string
+        format: date-time
+        title: The shipment should be picked up before this time
+      deliveryAddress:
+        $ref: '#/definitions/v1beta1Address'
+        description: The address where the shipment is delivered to.
+      deliveryInstructions:
+        type: string
+        description: Instructions for the delivery.
+      requestedDeliveryStartTime:
+        type: string
+        format: date-time
+        title: The shipment should be delivered after this time
+      requestedDeliveryEndTime:
+        type: string
+        format: date-time
+        title: The shipment should be delivered before this time
+      units:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/bookv1beta1Unit'
+        title: Shipment units
+      externalReferenceId:
+        type: string
+        description: An external reference for this shipment. If supplied then it must be unique within the space.
+      tour:
+        type: string
+        description: Resource name of the truck tour booking this shipment relates to.
+      state:
+        $ref: '#/definitions/v1beta1ShipmentState'
+        description: 'Shipment state
+
+          Can be set to ACTIVE (default) or RELEASED when creating a shipment.
+
+          Disabled as existing API allows setting.'
+      deliveryState:
+        $ref: '#/definitions/ShipmentDeliveryState'
+        title: Shipment delivery state
+        readOnly: true
+      vehicle:
+        $ref: '#/definitions/v1beta1Vehicle'
+        title: Vehicle information for the shipment
+      annotations:
+        type: object
+        additionalProperties:
+          type: string
+        title: Annotations for the shipment
+      service:
+        $ref: '#/definitions/ShipmentService'
+        title: Shipment service, defaults to PALLET
+    description: A shipment represents a demand to deliver goods from an origin to a destination.
+    required:
+    - sender
+    - deliveryAddress
+    - units
+  ShipmentDeliveryState:
+    type: string
+    enum:
+    - AWAITING
+    - IN_TRANSIT
+    - DELIVERED
+    description: "- AWAITING: Shipment delivery hasn't started\n - IN_TRANSIT: Shipment is in transit\n - DELIVERED: Shipment is delivered"
+    title: Shipment delivery state
+  UnitWeightUnit:
+    type: string
+    enum:
+    - KG
+    - LBS
+    description: "- KG: Kilograms\n - LBS: Pounds"
+    title: Weight units
+  ShipmentServiceCancelShipmentBody:
+    type: object
+    description: Request message for BookService.CancelShipment.
+  ShipmentServiceReleaseShipmentBody:
+    type: object
+    description: Request message for BookService.ReleaseShipment.
+  UnitVolumeUnit:
+    type: string
+    enum:
+    - CBM
+    - CBFT
+    description: "- CBM: Cubic meters\n - CBFT: Cubic feet"
+    title: Volume units
+  UnitLength:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+        title: Length value
+      unit:
+        $ref: '#/definitions/UnitLengthUnit'
+        title: Length unit
+    title: Length specified in different units
+    required:
+    - value
+    - unit
+  v1beta1ShipmentState:
+    type: string
+    enum:
+    - ACTIVE
+    - RELEASED
+    - CANCELLED
+    description: "- ACTIVE: Shipment is active (initial state).\n - RELEASED: Shipment is ready for pickup.\n - CANCELLED: Shipment is cancelled"
+    title: Shipment state
+  UnitLengthUnit:
+    type: string
+    enum:
+    - CM
+    - IN
+    description: "- CM: Centimeters\n - IN: Inches"
+    title: Length units
+  typeLatLng:
+    type: object
+    properties:
+      latitude:
+        type: number
+        format: double
+        description: The latitude in degrees. It must be in the range [-90.0, +90.0].
+      longitude:
+        type: number
+        format: double
+        description: The longitude in degrees. It must be in the range [-180.0, +180.0].
+    description: 'An object that represents a latitude/longitude pair. This is expressed as a
+
+      pair of doubles to represent degrees latitude and degrees longitude. Unless
+
+      specified otherwise, this must conform to the
+
+      <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
+
+      standard</a>. Values must be within normalized ranges.'
+  rpcStatus:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/protobufAny'
