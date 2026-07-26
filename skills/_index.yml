@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/einride-book-openapi-original.yml, openapi/einride-auth-openapi-original.yml
+skills:
+  - file: einride-authenticate.md
+    name: Authenticate with Einride Extend
+    api: openapi/einride-auth-openapi-original.yml
+    operations: [AuthenticationService_ExchangeSecret]
+  - file: einride-book-truck-tour.md
+    name: Book and confirm a truck tour
+    api: openapi/einride-book-openapi-original.yml
+    operations: [BookingService_CreateTour, BookingService_ConfirmTour, BookingService_GetTour, BookingService_ListTours, BookingService_SearchTours, BookingService_CancelTour, BookingService_UpdateTour]
+  - file: einride-create-and-track-shipment.md
+    name: Create, release and track a shipment
+    api: openapi/einride-book-openapi-original.yml
+    operations: [ShipmentService_CreateShipment, ShipmentService_GetShipment, ShipmentService_ListShipments, ShipmentService_UpdateShipment, ShipmentService_ReleaseShipment, ShipmentService_CancelShipment]

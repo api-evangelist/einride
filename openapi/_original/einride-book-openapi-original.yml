@@ -1,0 +1,1341 @@
+swagger: "2.0"
+info:
+  title: 'Einride Extend: Shipment API'
+  description: |
+    Based on REST principles, with optional support for gRPC, the Einride Extend Shipment API enables modern API-based integration to Einride Saga for transport booking.
+
+    API design
+    ----------
+
+    The Einride Extend APIs are designed using the [AIP](https://aip.dev) design framework, which means that they are resource-oriented and work like standard [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) APIs.
+
+    ### Resource-oriented design
+
+    *See also: [AIP-121: Resource-oriented design](https://google.aip.dev/121)*
+
+    The fundamental building blocks of this API are individually-named resources (nouns) and the relationships and hierarchy that exist between them.
+
+    A number of standard methods (verbs) provide the semantics for common [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations. Custom methods are available where custom operations are required, such as for cancelling shipments.
+
+    ### Resource names
+
+    *See also: [AIP-122: Resource names](https://google.aip.dev/122)*
+
+    This API exposes resources which users are able to create, retrieve, and manipulate. Resources are named: each resource has a unique identifier that users use to reference that resource, and these names are what users should store as the canonical names for the resources.
+
+    As such, the unique identifier for a resource in this API is called a *resource name*.
+
+    Protocols
+    ---------
+
+    The Einride Extend APIs support both HTTP and gRPC protocols.
+
+    ### HTTP
+
+    The Einride Extend APIs are available as RESTful HTTP endpoints.
+
+    See this document for the OpenAPI specifications, or use the API documentation at [extend.saga.einride.tech](https://extend.saga.einride.tech), where you can also try out the REST APIs and make example requests.
+
+    ### gRPC
+
+    [gRPC](https://grpc.io) is a high performance, open source universal RPC framework that works across programming languages and platforms.
+
+    To for more information about using Einride Extend APIs via gRPC, please contact your Einride representative.
+
+    Authentication
+    ---------
+
+    The Einride Extend use standard [Bearer token authentication](https://swagger.io/docs/specification/authentication/bearer-authentication/). When using the HTTP APIs, make sure to always provide the following header in all requests:
+
+
+        Authorization: Bearer <token>
+
+
+    Where `<token>` is the authentication token for your integration. Please contact your Einride representative to obtain an authentication token for your integration.
+
+    API address
+    ---------
+
+    The Einride Extend API is available via the following root address:
+
+    https://api.saga.einride.tech
+  version: v1beta1
+tags:
+  - name: ShipmentService
+  - name: BookingService
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /v1beta1/{parent}/shipments:
+    get:
+      summary: List shipments in a space.
+      description: This is an AIP standard [List](https://google.aip.dev/132) method.
+      operationId: ShipmentService_ListShipments
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1ListShipmentsResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: parent
+          description: |-
+            The resource name of the parent, which owns this collection of shipments.
+            Format: spaces/{space}
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+
+        - name: pageSize
+          description: |-
+            Requested page size. Server may return fewer shipments than requested.
+            If unspecified, server will pick an appropriate default.
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: pageToken
+          description: |-
+            A token identifying a page of results the server should return.
+            Typically, this is the value of ListShipmentsResponse.page_token
+            returned from the previous call to `ListShipments` method.
+          in: query
+          required: false
+          type: string
+        - name: orderBy
+          description: |-
+            How the results should be sorted. Presently, the only permitted values are:
+
+            - `"create_time desc"` (default if no order_by is specified)
+            - `"create_time asc"`
+            Example:
+            ```
+            order_by = "create_time desc"
+            ``
+          in: query
+          required: false
+          type: string
+        - name: showDeleted
+          description: Controls whether deleted shipments should be returned. Defaults to false.
+          in: query
+          required: false
+          type: boolean
+        - name: skip
+          description: Allows to skip results.
+          in: query
+          required: false
+          type: integer
+          format: int32
+      tags:
+        - ShipmentService
+  /v1beta1/{parent}/tours:
+    get:
+      summary: List existing truck tours.
+      description: This is an AIP standard [List](https://google.aip.dev/132) method.
+      operationId: BookingService_ListTours
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1ListToursResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: parent
+          description: |-
+            The resource name of the parent, which owns this collection of tours.
+            Format: spaces/{space}
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+
+        - name: pageSize
+          description: |-
+            Requested page size. Server may return fewer tours than requested.
+            If unspecified, server will pick an appropriate default.
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: pageToken
+          description: |-
+            A token identifying a page of results the server should return.
+            Typically, this is the value of ListToursResponse.page_token returned from the previous call to `ListTours` method.
+          in: query
+          required: false
+          type: string
+        - name: orderBy
+          description: |-
+            How the results should be sorted. Presently, the only permitted values are:
+
+            - `"create_time desc"` (default if no order_by is specified)
+            - `"create_time asc"`
+            Example:
+            ```
+            order_by = "create_time desc"
+            ``
+          in: query
+          required: false
+          type: string
+        - name: showDeleted
+          description: Controls whether deleted tours should be returned. Defaults to false.
+          in: query
+          required: false
+          type: boolean
+        - name: skip
+          description: Allows to skip results.
+          in: query
+          required: false
+          type: integer
+          format: int32
+      tags:
+        - BookingService
+  /v1beta1/{parent}/tours:search:
+    get:
+      summary: Search tours.
+      description: |-
+        Search for Tours in a space.
+        - You can search for Tours by external_reference_id
+      operationId: BookingService_SearchTours
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1SearchToursResponse'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: parent
+          description: |-
+            The resource name of the parent, which owns this collection of tours.
+            Format: spaces/{space}
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+
+        - name: pageSize
+          description: |-
+            Requested page size. Server may return fewer tours than requested.
+            If unspecified, server will pick an appropriate default.
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: pageToken
+          description: |-
+            A token identifying a page of results the server should return.
+            Typically, this is the value of
+            [SearchToursResponse.page_token][einride.saga.book.v1.SearchToursResponse.page_token]
+            returned from the previous call to `SearchTours` method.
+          in: query
+          required: false
+          type: string
+        - name: skip
+          description: Allows for skipping result
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: query
+          description: |-
+            Filters
+            Multiple filters will be combined with the logical operator AND.
+
+            Returned tours contain the query string in ANY of the fields:
+            tour_id, external_reference_id
+          in: query
+          required: false
+          type: string
+        - name: showDeleted
+          description: Includes deleted tours in result
+          in: query
+          required: false
+          type: boolean
+        - name: orderBy
+          description: |-
+            How the results should be sorted. Presently, the only permitted values are:
+
+            - `"create_time asc"` (default if no order_by is specified)
+            - `"create_time desc"`
+            Example:
+            ```
+            order_by = "create_time desc"
+            ```
+          in: query
+          required: false
+          type: string
+      tags:
+        - BookingService
+  /v1beta1/{shipment.name}:
+    patch:
+      summary: Update a shipment in a space.
+      description: This is an AIP standard [Update](https://google.aip.dev/134) method.
+      operationId: ShipmentService_UpdateShipment
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: shipment.name
+          description: The resource name of the shipment.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/shipments/[^/]+
+        - name: shipment
+          description: The resource which replaces the current resource.
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              space:
+                type: string
+                description: Resource name of the space that owns the shipment.
+                readOnly: true
+              sender:
+                type: string
+                description: Resource name of the sender of the shipment.
+              createTime:
+                type: string
+                format: date-time
+                description: The creation timestamp of the shipment.
+                readOnly: true
+              updateTime:
+                type: string
+                format: date-time
+                description: |-
+                  The last update timestamp of the shipment.
+                  Updated when create/update/delete operation is performed.
+                readOnly: true
+              deleteTime:
+                type: string
+                format: date-time
+                description: The deletion timestamp of the shipment. Set if the shipment is deleted.
+                readOnly: true
+              trackingId:
+                type: string
+                description: A generated tracking ID for this shipment.
+                readOnly: true
+              pickupAddress:
+                $ref: '#/definitions/v1beta1Address'
+                description: |-
+                  The address where the shipment is picked up.
+                  Supply when creating shipment if different from the sender default pickup address.
+              pickupInstructions:
+                type: string
+                description: Instructions for the pickup.
+              requestedPickupStartTime:
+                type: string
+                format: date-time
+                title: The shipment should be picked up after this time
+              requestedPickupEndTime:
+                type: string
+                format: date-time
+                title: The shipment should be picked up before this time
+              deliveryAddress:
+                $ref: '#/definitions/v1beta1Address'
+                description: The address where the shipment is delivered to.
+              deliveryInstructions:
+                type: string
+                description: Instructions for the delivery.
+              requestedDeliveryStartTime:
+                type: string
+                format: date-time
+                title: The shipment should be delivered after this time
+              requestedDeliveryEndTime:
+                type: string
+                format: date-time
+                title: The shipment should be delivered before this time
+              units:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/bookv1beta1Unit'
+                title: Shipment units
+              externalReferenceId:
+                type: string
+                description: An external reference for this shipment. If supplied then it must be unique within the space.
+              tour:
+                type: string
+                description: Resource name of the truck tour booking this shipment relates to.
+              state:
+                $ref: '#/definitions/v1beta1ShipmentState'
+                description: |-
+                  Shipment state
+                  Can be set to ACTIVE (default) or RELEASED when creating a shipment.
+                  Disabled as existing API allows setting.
+              deliveryState:
+                $ref: '#/definitions/ShipmentDeliveryState'
+                title: Shipment delivery state
+                readOnly: true
+              vehicle:
+                $ref: '#/definitions/v1beta1Vehicle'
+                title: Vehicle information for the shipment
+              annotations:
+                type: object
+                additionalProperties:
+                  type: string
+                title: Annotations for the shipment
+              service:
+                $ref: '#/definitions/ShipmentService'
+                title: Shipment service, defaults to PALLET
+            title: The resource which replaces the current resource.
+            required:
+              - sender
+              - deliveryAddress
+              - units
+              - shipment
+      tags:
+        - ShipmentService
+  /v1beta1/{shipment}:
+    get:
+      summary: Get a shipment.
+      description: This is an AIP standard [Get](https://google.aip.dev/131) method.
+      operationId: ShipmentService_GetShipment
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: shipment
+          description: The resource name of the shipment to retrieve.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/shipments/[^/]+
+      tags:
+        - ShipmentService
+  /v1beta1/{shipment}:cancel:
+    post:
+      summary: Cancel a shipment.
+      description: |-
+        The state of the shipment after cancelling it is CANCELLED.
+
+        This is an AIP [state](https://google.aip.dev/216) transition method.
+      operationId: ShipmentService_CancelShipment
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: shipment
+          description: The resource name of the shipment to cancel.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/shipments/[^/]+
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ShipmentServiceCancelShipmentBody'
+      tags:
+        - ShipmentService
+  /v1beta1/{shipment}:release:
+    post:
+      summary: Release a shipment.
+      description: |-
+        The state of the shipment after releasing it is RELEASED.
+
+        This is an AIP [state](https://google.aip.dev/216) transition method.
+      operationId: ShipmentService_ReleaseShipment
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: shipment
+          description: The resource name of the shipment to release.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/shipments/[^/]+
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ShipmentServiceReleaseShipmentBody'
+      tags:
+        - ShipmentService
+  /v1beta1/{space}/shipments:
+    post:
+      summary: Create a shipment in a space.
+      description: This is an AIP standard [Create](https://google.aip.dev/133) method.
+      operationId: ShipmentService_CreateShipment
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: space
+          description: The parent space in which to create the shipment.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+
+        - name: shipment
+          description: The shipment to create.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/v1beta1Shipment'
+            required:
+              - shipment
+      tags:
+        - ShipmentService
+  /v1beta1/{space}/tours:
+    post:
+      summary: Create a truck tour booking in a space.
+      description: This is an AIP standard [Create](https://google.aip.dev/133) method.
+      operationId: BookingService_CreateTour
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Tour'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: space
+          description: The parent space in which to create the tour.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+
+        - name: tour
+          description: The tour to create.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/v1beta1Tour'
+            required:
+              - tour
+      tags:
+        - BookingService
+  /v1beta1/{tour.name}:
+    patch:
+      summary: Update a tour.
+      description: |-
+        See: https://google.aip.dev/134 (Standard methods: Update).
+        If the tour has been confirmed, only a selection of fields can be updated: Stops.RequestedStartTime, Stops.RequestedEndTime, Annotations, PreliminaryShipments.Annotations.
+      operationId: BookingService_UpdateTour
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Tour'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: tour.name
+          description: The resource name of the tour.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/tours/[^/]+
+        - name: tour
+          description: The resource which replaces the current resource.
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              space:
+                type: string
+                description: Resource name of the space that owns the tour.
+                readOnly: true
+              sender:
+                type: string
+                description: Resource name of the sender of the tour.
+              createTime:
+                type: string
+                format: date-time
+                description: The creation timestamp of the tour.
+                readOnly: true
+              updateTime:
+                type: string
+                format: date-time
+                description: |-
+                  The last update timestamp of the tour.
+                  Updated when create/update/delete operation is performed.
+                readOnly: true
+              deleteTime:
+                type: string
+                format: date-time
+                description: The deletion timestamp of the tour. This is set if the tour is deleted.
+                readOnly: true
+              state:
+                $ref: '#/definitions/v1beta1TourState'
+                description: |-
+                  The state of the tour. Set to PENDING upon creation.
+                  A tour is then either accepted or rejected.
+                readOnly: true
+              type:
+                $ref: '#/definitions/TourTourType'
+                description: The type of tour, either PROVISIONAL or CONFIRMED. Defaults to PROVISIONAL.
+              serviceType:
+                $ref: '#/definitions/TourServiceType'
+                description: The type of service to create a tour for.
+              externalReferenceId:
+                type: string
+                description: External reference ID is a unique identifier that can be set by the client.
+              automationRule:
+                $ref: '#/definitions/TourAutomationRule'
+                description: The rule that is applied when a confirmed tour is accepted. Defaults to CREATE_SHIPMENTS.
+              preliminaryShipments:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/TourPreliminaryShipment'
+                description: |-
+                  The preliminary shipments included in this tour.
+                  A preliminary shipment includes input about the specific shipments for a tour, including units and references.
+              stops:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/TourStop'
+                description: The ordered list of stops included in this tour.
+              createdShipments:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/v1beta1Shipment'
+                description: The shipments that are associated with the tour. These are created when a tour is CONFIRMED and ACCEPTED.
+                readOnly: true
+              annotations:
+                type: object
+                additionalProperties:
+                  type: string
+                description: Supplementary annotation metadata for the tour, e.g. customer internal references.
+            title: The resource which replaces the current resource.
+            required:
+              - sender
+              - serviceType
+              - preliminaryShipments
+              - stops
+              - tour
+      tags:
+        - BookingService
+  /v1beta1/{tour}:
+    get:
+      summary: Get an existing truck tour booking.
+      description: This is an AIP standard [Get](https://google.aip.dev/131) method.
+      operationId: BookingService_GetTour
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Tour'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: tour
+          description: The resource name of the tour to retrieve.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/tours/[^/]+
+      tags:
+        - BookingService
+  /v1beta1/{tour}:cancel:
+    get:
+      summary: Cancel a tour.
+      operationId: BookingService_CancelTour
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Tour'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: tour
+          description: The resource name of the tour to cancel.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/tours/[^/]+
+      tags:
+        - BookingService
+  /v1beta1/{tour}:confirm:
+    get:
+      summary: Confirm a Provisional tour.
+      description: |-
+        Reconfirming a tour that is already confirmed will return an InvalidArgument Error.
+        When a tour has been accepted by Saga and confirmed by the user, Shipments will be created.
+      operationId: BookingService_ConfirmTour
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/v1beta1Tour'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+        - name: tour
+          description: The resource name of the tour to confirm.
+          in: path
+          required: true
+          type: string
+          pattern: spaces/[^/]+/tours/[^/]+
+      tags:
+        - BookingService
+definitions:
+  ShipmentDeliveryState:
+    type: string
+    enum:
+      - AWAITING
+      - IN_TRANSIT
+      - DELIVERED
+    description: |-
+      - AWAITING: Shipment delivery hasn't started
+       - IN_TRANSIT: Shipment is in transit
+       - DELIVERED: Shipment is delivered
+    title: Shipment delivery state
+  ShipmentService:
+    type: string
+    enum:
+      - PALLET
+      - FTL
+      - DRAYAGE
+    description: |-
+      - PALLET: Pallet
+       - FTL: Full truck load
+       - DRAYAGE: Drayage is the transport of goods over a short distance also known as the "The first mile."
+    title: Shipment service type
+  ShipmentServiceCancelShipmentBody:
+    type: object
+    description: Request message for BookService.CancelShipment.
+  ShipmentServiceReleaseShipmentBody:
+    type: object
+    description: Request message for BookService.ReleaseShipment.
+  TourAutomationRule:
+    type: string
+    enum:
+      - CREATE_SHIPMENTS
+      - CREATE_AND_RELEASE_SHIPMENTS
+    description: |-
+      The rule that is applied when a confirmed tour is accepted.
+
+       - CREATE_SHIPMENTS: When the confirmed tour is accepted, shipments will be created automatically from its stops and units.
+       - CREATE_AND_RELEASE_SHIPMENTS: When the confirmed tour is accepted, shipments will be created automatically from its stops and units
+      and then released.
+  TourPreliminaryShipment:
+    type: object
+    properties:
+      externalReferenceId:
+        type: string
+        description: A customer provided external reference id.
+      units:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/bookv1beta1Unit'
+        description: The units that should be shipped.
+      annotations:
+        type: object
+        additionalProperties:
+          type: string
+        description: Annotations for the shipment.
+    description: Customer provided information about a shipment associated with a tour that will be added to the created shipments.
+    required:
+      - externalReferenceId
+      - units
+  TourServiceType:
+    type: string
+    enum:
+      - FULL_TRUCK_LOAD
+      - DISTRIBUTION
+      - SHUTTLE
+      - MILK_RUN
+      - DRAYAGE
+    description: |-
+      The service type of the tour.
+
+       - FULL_TRUCK_LOAD: Service type FTL.
+       - DISTRIBUTION: Service type distribution.
+       - SHUTTLE: Service type shuttle.
+       - MILK_RUN: Service type milk run.
+       - DRAYAGE: Service type drayage.
+  TourStop:
+    type: object
+    properties:
+      address:
+        $ref: '#/definitions/v1beta1Address'
+        description: The address of this stop.
+      stopType:
+        $ref: '#/definitions/TourStopType'
+        description: The type of stop.
+      instructions:
+        type: string
+        description: Instructions for this stop.
+      contactPerson:
+        type: string
+        description: The contact person for this stop.
+      requestedStartTime:
+        type: string
+        format: date-time
+        description: The earliest time to arrive this stop.
+      requestedEndTime:
+        type: string
+        format: date-time
+        description: The latest time to depart this stop.
+      shipmentExternalReferenceIds:
+        type: array
+        items:
+          type: string
+        description: |-
+          The shipment external reference ids associated with this stop. E.g. for a pickup stop this will hold the shipments to pickup.
+          The external_reference_ids are defined in preliminary_shipments.
+    description: A stop is an address where an event is going to happen. The event is either to pickup or deliver goods.
+    required:
+      - address
+      - stopType
+      - requestedStartTime
+      - requestedEndTime
+      - shipmentExternalReferenceIds
+  TourStopType:
+    type: string
+    enum:
+      - PICKUP
+      - DELIVER
+    description: |-
+      Type describes the reason for the stop. E.g. a stop to deliver or pickup.
+
+       - PICKUP: Stop to pick up goods.
+       - DELIVER: Stop to deliver goods.
+  TourTourType:
+    type: string
+    enum:
+      - PROVISIONAL
+      - CONFIRMED
+    description: |-
+      The tour type.
+
+       - PROVISIONAL: The tour is provisional and can be updated.
+       - CONFIRMED: The tour is confirmed and can not be updated.
+  UnitLength:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+        title: Length value
+      unit:
+        $ref: '#/definitions/UnitLengthUnit'
+        title: Length unit
+    title: Length specified in different units
+    required:
+      - value
+      - unit
+  UnitLengthUnit:
+    type: string
+    enum:
+      - CM
+      - IN
+    description: |-
+      - CM: Centimeters
+       - IN: Inches
+    title: Length units
+  UnitVolume:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+        title: Volume value
+      unit:
+        $ref: '#/definitions/UnitVolumeUnit'
+        title: Volume unit
+    title: Volume specified in different units
+    required:
+      - value
+      - unit
+  UnitVolumeUnit:
+    type: string
+    enum:
+      - CBM
+      - CBFT
+    description: |-
+      - CBM: Cubic meters
+       - CBFT: Cubic feet
+    title: Volume units
+  UnitWeight:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+        title: Weight value
+      unit:
+        $ref: '#/definitions/UnitWeightUnit'
+        title: Weight unit
+    title: Weight specified in different units
+    required:
+      - value
+      - unit
+  UnitWeightUnit:
+    type: string
+    enum:
+      - KG
+      - LBS
+    description: |-
+      - KG: Kilograms
+       - LBS: Pounds
+    title: Weight units
+  bookv1beta1Unit:
+    type: object
+    properties:
+      type:
+        type: string
+        title: Type of unit
+      externalReferenceId:
+        type: string
+        title: External reference ID of the unit
+      description:
+        type: string
+        title: Description of the unit
+      trackingId:
+        type: string
+        title: Unique unit tracking ID
+        readOnly: true
+      weight:
+        $ref: '#/definitions/UnitWeight'
+        title: Unit weight
+      length:
+        $ref: '#/definitions/UnitLength'
+        title: Unit length
+      height:
+        $ref: '#/definitions/UnitLength'
+        title: Unit height
+      width:
+        $ref: '#/definitions/UnitLength'
+        title: Unit width
+      volume:
+        $ref: '#/definitions/UnitVolume'
+        title: Unit volume
+    description: A unit is a holder of goods such as a EUR-pallet.
+    required:
+      - type
+      - weight
+  protobufAny:
+    type: object
+    properties:
+      '@type':
+        type: string
+    additionalProperties: {}
+  rpcStatus:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/protobufAny'
+  typeLatLng:
+    type: object
+    properties:
+      latitude:
+        type: number
+        format: double
+        description: The latitude in degrees. It must be in the range [-90.0, +90.0].
+      longitude:
+        type: number
+        format: double
+        description: The longitude in degrees. It must be in the range [-180.0, +180.0].
+    description: |-
+      An object that represents a latitude/longitude pair. This is expressed as a
+      pair of doubles to represent degrees latitude and degrees longitude. Unless
+      specified otherwise, this must conform to the
+      <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
+      standard</a>. Values must be within normalized ranges.
+  v1beta1Address:
+    type: object
+    properties:
+      recipient:
+        type: string
+        title: Recipient
+      co:
+        type: string
+        title: Care of (C/O)
+      line1:
+        type: string
+        title: Address line 1
+      line2:
+        type: string
+        title: Address line 2
+      postalCode:
+        type: string
+        title: Postal code
+      city:
+        type: string
+        title: City
+      regionCode:
+        type: string
+        title: |-
+          Region code (Unicode CLDR region code)
+          https://cldr.unicode.org/
+      stateCode:
+        type: string
+        title: State code
+      displayName:
+        type: string
+        title: The displayed name of the address
+      contactInfo:
+        type: string
+        title: Contact information
+      latLng:
+        $ref: '#/definitions/typeLatLng'
+        title: The geographic location of the address
+      externalReferenceId:
+        type: string
+        description: An external reference for this address.
+    description: An Address is where goods are picked up or delivered.
+    required:
+      - recipient
+      - line1
+      - postalCode
+      - city
+      - regionCode
+  v1beta1ListShipmentsResponse:
+    type: object
+    properties:
+      shipments:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1beta1Shipment'
+        description: The list of shipments.
+      nextPageToken:
+        type: string
+        description: |-
+          A token to retrieve next page of results.  Pass this value in the ListShipmentsRequest.page_token field in the
+          subsequent call to `ListShipments` method to retrieve the next page of results.
+      totalSize:
+        type: integer
+        format: int32
+        description: The total size of shipments found in a space.
+    description: Response message for ShipmentService.ListShipments.
+  v1beta1ListToursResponse:
+    type: object
+    properties:
+      tours:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1beta1Tour'
+        description: The list of tours. If there are none in the current page then this will be empty.
+      nextPageToken:
+        type: string
+        description: |-
+          A token to retrieve next page of results.  Pass this value in the ListToursRequest.page_token field in the
+          subsequent call to `ListTours` method to retrieve the next page of results.
+      totalSize:
+        type: integer
+        format: int32
+        description: The total size of tours found in a space.
+    description: Response message for TourService.ListTours.
+  v1beta1SearchToursResponse:
+    type: object
+    properties:
+      tours:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1beta1Tour'
+        description: The list of tours.
+      nextPageToken:
+        type: string
+        description: |-
+          A token to retrieve next page of results. Pass this value in the
+          SearchToursRequest.page_token field in the subsequent call to `SearchTours` method
+          to retrieve the next page of results.
+      totalSize:
+        type: integer
+        format: int32
+        description: The total size of tours found using the search filters.
+    description: Response message for TourService.SearchTours.
+  v1beta1Shipment:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The resource name of the shipment.
+      space:
+        type: string
+        description: Resource name of the space that owns the shipment.
+        readOnly: true
+      sender:
+        type: string
+        description: Resource name of the sender of the shipment.
+      createTime:
+        type: string
+        format: date-time
+        description: The creation timestamp of the shipment.
+        readOnly: true
+      updateTime:
+        type: string
+        format: date-time
+        description: |-
+          The last update timestamp of the shipment.
+          Updated when create/update/delete operation is performed.
+        readOnly: true
+      deleteTime:
+        type: string
+        format: date-time
+        description: The deletion timestamp of the shipment. Set if the shipment is deleted.
+        readOnly: true
+      trackingId:
+        type: string
+        description: A generated tracking ID for this shipment.
+        readOnly: true
+      pickupAddress:
+        $ref: '#/definitions/v1beta1Address'
+        description: |-
+          The address where the shipment is picked up.
+          Supply when creating shipment if different from the sender default pickup address.
+      pickupInstructions:
+        type: string
+        description: Instructions for the pickup.
+      requestedPickupStartTime:
+        type: string
+        format: date-time
+        title: The shipment should be picked up after this time
+      requestedPickupEndTime:
+        type: string
+        format: date-time
+        title: The shipment should be picked up before this time
+      deliveryAddress:
+        $ref: '#/definitions/v1beta1Address'
+        description: The address where the shipment is delivered to.
+      deliveryInstructions:
+        type: string
+        description: Instructions for the delivery.
+      requestedDeliveryStartTime:
+        type: string
+        format: date-time
+        title: The shipment should be delivered after this time
+      requestedDeliveryEndTime:
+        type: string
+        format: date-time
+        title: The shipment should be delivered before this time
+      units:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/bookv1beta1Unit'
+        title: Shipment units
+      externalReferenceId:
+        type: string
+        description: An external reference for this shipment. If supplied then it must be unique within the space.
+      tour:
+        type: string
+        description: Resource name of the truck tour booking this shipment relates to.
+      state:
+        $ref: '#/definitions/v1beta1ShipmentState'
+        description: |-
+          Shipment state
+          Can be set to ACTIVE (default) or RELEASED when creating a shipment.
+          Disabled as existing API allows setting.
+      deliveryState:
+        $ref: '#/definitions/ShipmentDeliveryState'
+        title: Shipment delivery state
+        readOnly: true
+      vehicle:
+        $ref: '#/definitions/v1beta1Vehicle'
+        title: Vehicle information for the shipment
+      annotations:
+        type: object
+        additionalProperties:
+          type: string
+        title: Annotations for the shipment
+      service:
+        $ref: '#/definitions/ShipmentService'
+        title: Shipment service, defaults to PALLET
+    description: A shipment represents a demand to deliver goods from an origin to a destination.
+    required:
+      - sender
+      - deliveryAddress
+      - units
+  v1beta1ShipmentState:
+    type: string
+    enum:
+      - ACTIVE
+      - RELEASED
+      - CANCELLED
+    description: |-
+      - ACTIVE: Shipment is active (initial state).
+       - RELEASED: Shipment is ready for pickup.
+       - CANCELLED: Shipment is cancelled
+    title: Shipment state
+  v1beta1Tour:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The resource name of the tour.
+      space:
+        type: string
+        description: Resource name of the space that owns the tour.
+        readOnly: true
+      sender:
+        type: string
+        description: Resource name of the sender of the tour.
+      createTime:
+        type: string
+        format: date-time
+        description: The creation timestamp of the tour.
+        readOnly: true
+      updateTime:
+        type: string
+        format: date-time
+        description: |-
+          The last update timestamp of the tour.
+          Updated when create/update/delete operation is performed.
+        readOnly: true
+      deleteTime:
+        type: string
+        format: date-time
+        description: The deletion timestamp of the tour. This is set if the tour is deleted.
+        readOnly: true
+      state:
+        $ref: '#/definitions/v1beta1TourState'
+        description: |-
+          The state of the tour. Set to PENDING upon creation.
+          A tour is then either accepted or rejected.
+        readOnly: true
+      type:
+        $ref: '#/definitions/TourTourType'
+        description: The type of tour, either PROVISIONAL or CONFIRMED. Defaults to PROVISIONAL.
+      serviceType:
+        $ref: '#/definitions/TourServiceType'
+        description: The type of service to create a tour for.
+      externalReferenceId:
+        type: string
+        description: External reference ID is a unique identifier that can be set by the client.
+      automationRule:
+        $ref: '#/definitions/TourAutomationRule'
+        description: The rule that is applied when a confirmed tour is accepted. Defaults to CREATE_SHIPMENTS.
+      preliminaryShipments:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/TourPreliminaryShipment'
+        description: |-
+          The preliminary shipments included in this tour.
+          A preliminary shipment includes input about the specific shipments for a tour, including units and references.
+      stops:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/TourStop'
+        description: The ordered list of stops included in this tour.
+      createdShipments:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1beta1Shipment'
+        description: The shipments that are associated with the tour. These are created when a tour is CONFIRMED and ACCEPTED.
+        readOnly: true
+      annotations:
+        type: object
+        additionalProperties:
+          type: string
+        description: Supplementary annotation metadata for the tour, e.g. customer internal references.
+    description: |-
+      A Tour is a preplanned definition of what groups of goods are to be picked up and delivered, where, at what times, and in what order.
+      When a tour is accepted and confirmed by Saga, Shipments based on the data provided in the Tour will be created.
+    required:
+      - sender
+      - serviceType
+      - preliminaryShipments
+      - stops
+  v1beta1TourState:
+    type: string
+    enum:
+      - PENDING
+      - ACCEPTED
+      - REJECTED
+      - CANCELLED
+    description: |-
+      The state of the tour.
+
+       - PENDING: The tour is received. Awaiting accept/reject.
+       - ACCEPTED: The tour is accepted.
+       - REJECTED: The tour is rejected.
+       - CANCELLED: The tour is cancelled.
+  v1beta1Vehicle:
+    type: object
+    properties:
+      referenceId:
+        type: string
+        title: Reference id
+      driverReferenceId:
+        type: string
+        title: Driver reference id
+      carrierReferenceId:
+        type: string
+        title: Carrier reference id
+    title: Holds vehicle information
+    required:
+      - referenceId
+securityDefinitions:
+  Authorization:
+    type: apiKey
+    name: authorization
+    in: header
+security:
+  - Authorization: []

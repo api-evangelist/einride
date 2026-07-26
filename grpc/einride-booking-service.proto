@@ -1,0 +1,289 @@
+syntax = "proto3";
+
+package einride.saga.extend.book.v1beta1;
+
+import "einride/iam/v1/annotations.proto";
+import "einride/saga/extend/book/v1beta1/tour.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/field_mask.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// Booking service.
+service BookingService {
+  option (google.api.default_host) = "api.saga.einride.tech";
+
+  // Create a truck tour booking in a space.
+  //
+  // This is an AIP standard [Create](https://google.aip.dev/133) method.
+  rpc CreateTour(CreateTourRequest) returns (Tour) {
+    option (google.api.http) = {
+      post: "/v1beta1/{parent=spaces/*}/tours"
+      body: "tour"
+    };
+    option (google.api.method_signature) = "parent,tour";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "book.tours.create"
+      before: {
+        expression: "test(caller, request.parent)"
+        description: "The caller must have permission to create a tour in the parent space."
+      }
+    };
+  }
+
+  // Get an existing truck tour booking.
+  //
+  // This is an AIP standard [Get](https://google.aip.dev/131) method.
+  rpc GetTour(GetTourRequest) returns (Tour) {
+    option (google.api.http) = {get: "/v1beta1/{name=spaces/*/tours/*}"};
+    option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "book.tours.get"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to get the tour"
+      }
+    };
+  }
+
+  // List existing truck tours.
+  //
+  // This is an AIP standard [List](https://google.aip.dev/132) method.
+  rpc ListTours(ListToursRequest) returns (ListToursResponse) {
+    option (google.api.http) = {get: "/v1beta1/{parent=spaces/*}/tours"};
+    option (google.api.method_signature) = "parent";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "book.tours.list"
+      before: {
+        expression: "test(caller, request.parent)"
+        description: "The caller must have permission to list all tours in the parent space."
+      }
+    };
+  }
+
+  // Search tours.
+  //
+  // Search for Tours in a space.
+  // - You can search for Tours by external_reference_id
+  rpc SearchTours(SearchToursRequest) returns (SearchToursResponse) {
+    option (google.api.http) = {get: "/v1beta1/{parent=spaces/*}/tours:search"};
+    option (einride.iam.v1.method_authorization) = {
+      permission: "book.tours.search"
+      before: {
+        expression: "test(caller, request.parent)"
+        description: "The caller must have permission to list all tours in the parent space."
+      }
+    };
+  }
+
+  // Confirm a Provisional tour.
+  //
+  // Reconfirming a tour that is already confirmed will return an InvalidArgument Error.
+  // When a tour has been accepted by Saga and confirmed by the user, Shipments will be created.
+  rpc ConfirmTour(ConfirmTourRequest) returns (Tour) {
+    option (google.api.http) = {get: "/v1beta1/{name=spaces/*/tours/*}:confirm"};
+    option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "book.tours.confirm"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to confirm the tour"
+      }
+    };
+  }
+
+  // Update a tour.
+  //
+  // See: https://google.aip.dev/134 (Standard methods: Update).
+  // If the tour has been confirmed, only a selection of fields can be updated: Stops.RequestedStartTime, Stops.RequestedEndTime, Annotations, PreliminaryShipments.Annotations.
+  rpc UpdateTour(UpdateTourRequest) returns (Tour) {
+    option (google.api.http) = {
+      patch: "/v1beta1/{tour.name=spaces/*/tours/*}"
+      body: "tour"
+    };
+    option (google.api.method_signature) = "tour,update_mask";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "book.tours.update"
+      before: {
+        expression: "test(caller, request.tour.name)"
+        description: "The caller must have permission to update a tour."
+      }
+    };
+  }
+
+  // Cancel a tour.
+  rpc CancelTour(CancelTourRequest) returns (Tour) {
+    option (google.api.http) = {get: "/v1beta1/{name=spaces/*/tours/*}:cancel"};
+    option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "book.tours.cancel"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to cancel the tour"
+      }
+    };
+  }
+}
+
+// The request message to create a tour.
+message CreateTourRequest {
+  // The parent space in which to create the tour.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "api.saga.einride.tech/Space"},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      field_configuration: {path_param_name: "space"}
+    }
+  ];
+
+  // The tour to create.
+  Tour tour = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The request message to get a tour.
+message GetTourRequest {
+  // The resource name of the tour to retrieve.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "api.saga.einride.tech/Tour"},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      field_configuration: {path_param_name: "tour"}
+    }
+  ];
+}
+
+// Request message for TourService.ListTours.
+message ListToursRequest {
+  // The resource name of the parent, which owns this collection of tours.
+  // Format: spaces/{space}
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "api.saga.einride.tech/Space"}
+  ];
+
+  // Requested page size. Server may return fewer tours than requested.
+  // If unspecified, server will pick an appropriate default.
+  int32 page_size = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // A token identifying a page of results the server should return.
+  // Typically, this is the value of ListToursResponse.page_token returned from the previous call to `ListTours` method.
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // How the results should be sorted. Presently, the only permitted values are:
+  //
+  // - `"create_time desc"` (default if no order_by is specified)
+  // - `"create_time asc"`
+  // Example:
+  // ```
+  // order_by = "create_time desc"
+  // ``
+  string order_by = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // Controls whether deleted tours should be returned. Defaults to false.
+  bool show_deleted = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // Allows to skip results.
+  int32 skip = 6 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for TourService.ListTours.
+message ListToursResponse {
+  // The list of tours. If there are none in the current page then this will be empty.
+  repeated Tour tours = 1 [(google.api.field_behavior) = OPTIONAL];
+  // A token to retrieve next page of results.  Pass this value in the ListToursRequest.page_token field in the
+  // subsequent call to `ListTours` method to retrieve the next page of results.
+  string next_page_token = 2 [(google.api.field_behavior) = OPTIONAL];
+  // The total size of tours found in a space.
+  int32 total_size = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request to search tours
+message SearchToursRequest {
+  // The resource name of the parent, which owns this collection of tours.
+  // Format: spaces/{space}
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "api.saga.einride.tech/Space"}
+  ];
+
+  // Requested page size. Server may return fewer tours than requested.
+  // If unspecified, server will pick an appropriate default.
+  int32 page_size = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // A token identifying a page of results the server should return.
+  // Typically, this is the value of
+  // [SearchToursResponse.page_token][einride.saga.book.v1.SearchToursResponse.page_token]
+  // returned from the previous call to `SearchTours` method.
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // Allows for skipping result
+  int32 skip = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // Filters
+  // Multiple filters will be combined with the logical operator AND.
+  //
+  // Returned tours contain the query string in ANY of the fields:
+  // tour_id, external_reference_id
+  string query = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // Includes deleted tours in result
+  bool show_deleted = 8 [(google.api.field_behavior) = OPTIONAL];
+
+  // How the results should be sorted. Presently, the only permitted values are:
+  //
+  // - `"create_time asc"` (default if no order_by is specified)
+  // - `"create_time desc"`
+  // Example:
+  // ```
+  // order_by = "create_time desc"
+  // ```
+  string order_by = 7 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for TourService.SearchTours.
+message SearchToursResponse {
+  // The list of tours.
+  repeated Tour tours = 1 [(google.api.field_behavior) = OPTIONAL];
+  // A token to retrieve next page of results. Pass this value in the
+  // SearchToursRequest.page_token field in the subsequent call to `SearchTours` method
+  // to retrieve the next page of results.
+  string next_page_token = 2 [(google.api.field_behavior) = OPTIONAL];
+  // The total size of tours found using the search filters.
+  int32 total_size = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// The request message to confirm a tour.
+message ConfirmTourRequest {
+  // The resource name of the tour to confirm.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "api.saga.einride.tech/Tour"},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      field_configuration: {path_param_name: "tour"}
+    }
+  ];
+}
+
+// Request to UpdateTour method.
+message UpdateTourRequest {
+  // The resource which replaces the current resource.
+  Tour tour = 1 [(google.api.field_behavior) = REQUIRED];
+  // The update mask applies to the tour.
+  // For the `FieldMask` definition, see:
+  // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// The request message to cancel a tour.
+message CancelTourRequest {
+  // The resource name of the tour to cancel.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "api.saga.einride.tech/Tour"},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      field_configuration: {path_param_name: "tour"}
+    }
+  ];
+}

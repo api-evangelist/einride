@@ -1,0 +1,43 @@
+# Einride Extend (Saga) API
+
+> Einride Extend is the open API and developer-tools layer for Saga, Einride's freight
+> mobility platform for electric and autonomous road freight. The resource-oriented APIs
+> (designed with Google AIP) let you book truck tours and create/track shipments over both
+> gRPC and HTTP. The APIs are alpha (v1beta1) and available to select developers during an
+> early-access phase. Authentication is a Bearer token obtained by exchanging a client ID +
+> client secret. Root address: https://api.saga.einride.tech (regional: eu./us.).
+
+## APIs
+- [Authentication API](openapi/einride-auth-openapi-original.yml): Exchange a client ID/secret for a short-lived bearer access token.
+- [Shipment & Booking API](openapi/einride-book-openapi-original.yml): Create, list, update, release and cancel shipments; create, confirm, search and cancel truck tours.
+
+## Specs
+- [Auth OpenAPI (Swagger 2.0)](openapi/einride-auth-openapi-original.yml)
+- [Shipment/Booking OpenAPI (Swagger 2.0)](openapi/einride-book-openapi-original.yml)
+- [Auth gRPC proto](grpc/einride-auth-service.proto)
+- [Booking gRPC proto](grpc/einride-booking-service.proto)
+- [Shipment gRPC proto](grpc/einride-shipment-service.proto)
+- [Buf Schema Registry module](https://buf.build/einride/saga)
+
+## Artifacts
+- [Authentication profile](authentication/einride-authentication.yml)
+- [API conventions (AIP, pagination, errors)](conventions/einride-conventions.yml)
+- [Error catalog (google.rpc.Status)](errors/einride-problem-types.yml)
+- [Data model / ERD](data-model/einride-data-model.yml)
+- [Lifecycle & versioning](lifecycle/einride-lifecycle.yml)
+- [Changelog](changelog/einride-changelog.yml)
+- [saga CLI](cli/einride-cli.yml)
+- [Packages](packages/einride-packages.yml)
+- [UI components](components/einride-components.yml)
+- [Conformance](conformance/einride-conformance.yml)
+- [MCP candidate tools](mcp/einride-mcp.yml)
+
+## Docs
+- [Extend developer portal](https://extend.saga.einride.tech)
+- [Extend repository](https://github.com/einride/extend)
+- [API design (AIP)](https://github.com/einride/extend/blob/master/docs/apis.md)
+- [CLI guide](https://github.com/einride/extend/blob/master/docs/cli.md)
+- [SDK guide](https://github.com/einride/extend/blob/master/docs/sdks.md)
+- [Engineering blog](https://einride.engineering/blog)
+- [Apply for early access](https://forms.gle/Sn3CYSgUgJbJE78X9)
+- [Security policy / VDP](https://www.einride.tech/security/vulnerability-disclosure-policy)

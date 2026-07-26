@@ -1,0 +1,25 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/einride/ui, https://www.npmjs.com/package/@einride/ui
+notes: >-
+  Einride publishes a first-party React UI component framework for building Saga apps,
+  documented in the Extend README ("UI" section) and shipped on npm. These are
+  client-side UI components, distinct from server-side API SDKs.
+families:
+  - name: Einride UI
+    package: "@einride/ui"
+    registry: npm
+    url: https://www.npmjs.com/package/@einride/ui
+    repo: https://github.com/einride/ui
+    kind: react-component-library
+    description: Core React components that adhere to Einride's design system, for developing Saga apps.
+  - name: Einride Hooks
+    package: "@einride/hooks"
+    registry: npm
+    url: https://www.npmjs.com/package/@einride/hooks
+    repo: https://github.com/einride/hooks
+    kind: react-hooks
+    description: Reusable React hooks used alongside the Einride UI component library.
+loaders:
+  - react
+  - "@einride/ui (npm)"

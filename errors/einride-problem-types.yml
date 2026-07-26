@@ -1,0 +1,69 @@
+generated: '2026-07-19'
+method: derived
+format: grpc-status
+source: openapi/einride-book-openapi-original.yml, openapi/einride-auth-openapi-original.yml
+notes: >-
+  The Einride Extend APIs are gRPC services exposed over HTTP via AIP-127 transcoding.
+  Every operation returns a single default error schema, google.rpc.Status (rpcStatus in
+  the Swagger definitions), with integer `code`, `message`, and a `details[]` array of
+  google.protobuf.Any. There are no per-status RFC 9457 problem types; errors are the
+  standard gRPC status codes below (the canonical google.rpc.Code enumeration referenced
+  by AIP-193). Titles/remediation are derived from the AIP error model and the operation
+  descriptions in the specs.
+envelope:
+  schema: rpcStatus (google.rpc.Status)
+  fields:
+    code: integer (google.rpc.Code)
+    message: string
+    details: array of google.protobuf.Any
+problems:
+  - code: 3
+    status: INVALID_ARGUMENT
+    http: 400
+    title: Invalid argument
+    remediation: >-
+      Client specified an invalid argument. E.g. confirming an already-confirmed tour
+      returns InvalidArgument (see BookingService_ConfirmTour), or a resource name that
+      does not match the required pattern.
+  - code: 5
+    status: NOT_FOUND
+    http: 404
+    title: Resource not found
+    remediation: The referenced space, shipment, or tour resource name does not exist.
+  - code: 6
+    status: ALREADY_EXISTS
+    http: 409
+    title: Resource already exists
+    remediation: A resource with the supplied externalReferenceId already exists in the space.
+  - code: 7
+    status: PERMISSION_DENIED
+    http: 403
+    title: Permission denied
+    remediation: The bearer token is not authorized for this space or operation.
+  - code: 16
+    status: UNAUTHENTICATED
+    http: 401
+    title: Unauthenticated
+    remediation: >-
+      Missing or expired Bearer token. Obtain a fresh access token via
+      AuthenticationService_ExchangeSecret and retry.
+  - code: 9
+    status: FAILED_PRECONDITION
+    http: 400
+    title: Failed precondition
+    remediation: The resource is in a state that does not permit the requested transition.
+  - code: 8
+    status: RESOURCE_EXHAUSTED
+    http: 429
+    title: Resource exhausted
+    remediation: Rate or quota limit reached; back off and retry.
+  - code: 13
+    status: INTERNAL
+    http: 500
+    title: Internal error
+    remediation: An unexpected server error occurred; retry with backoff and contact Einride if it persists.
+  - code: 14
+    status: UNAVAILABLE
+    http: 503
+    title: Service unavailable
+    remediation: The service is temporarily unavailable; retry with exponential backoff.

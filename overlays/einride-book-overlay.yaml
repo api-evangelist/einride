@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Einride Extend Shipment & Booking API
+  version: 1.0.0
+extends: openapi/einride-book-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-19'
+      x-api-design-framework: google-aip
+      x-auth-model: bearer-token via AuthenticationService_ExchangeSecret
+      x-error-format: google.rpc.Status
+      x-protocols: [grpc, http]
+      x-regions:
+        - eu.api.saga.einride.tech
+        - us.api.saga.einride.tech
+  - target: $
+    update:
+      host: api.saga.einride.tech
+      basePath: /
+  - target: $.tags
+    update:
+      - name: ShipmentService
+        description: AIP resource-oriented service for creating, listing, updating, releasing and cancelling shipments.
+      - name: BookingService
+        description: AIP resource-oriented service for creating, confirming, searching and cancelling truck tour bookings.

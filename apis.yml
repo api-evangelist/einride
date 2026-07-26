@@ -1,28 +1,163 @@
 aid: einride
 name: Einride
-description: 'Einride is a company surfaced as a portfolio company of eqt-ventures, northzone and added
-  to the API Evangelist network as a stub for enrichment. Sector: sustainable-transport. This profile
-  is a lead awaiting the enrichment pipeline.'
+description: >-
+  Einride is a Swedish freight technology company delivering an end-to-end platform for
+  electric and autonomous road freight, combining purpose-built autonomous trucks, electric
+  vehicles, smart charging, and the Saga operating software. Its developer-facing product,
+  Einride Extend, exposes open, resource-oriented APIs (designed with Google AIP) over both
+  gRPC and HTTP for booking truck tours and creating, releasing, and tracking shipments.
+  The Extend APIs are alpha (v1beta1) and offered to select developers during an early-access
+  phase, with a saga CLI, Buf Schema Registry proto module, and React UI component library.
+  Einride serves customers including PepsiCo, Heineken, and DP World across Europe, the US,
+  and the Middle East.
 url: https://raw.githubusercontent.com/api-evangelist/einride/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://raw.githubusercontent.com/einride/extend/master/docs/img/header.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - eqt-ventures
 - northzone
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: extend-saga-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Sustainable Transport
-apis: []
+- Freight
+- Logistics
+- Autonomous Vehicles
+- Electric Vehicles
+- Shipping
+- gRPC
+apis:
+- aid: einride:einride-authenticationservice-api
+  name: Einride AuthenticationService API
+  description: The AuthenticationService API from Einride — 1 operation(s) for authenticationservice.
+  humanURL: https://extend.saga.einride.tech
+  baseURL: https://api.saga.einride.tech
+  tags:
+  - AuthenticationService
+  properties:
+  - type: OpenAPI
+    url: openapi/einride-authenticationservice-api-openapi.yml
+  - type: Protobuf
+    url: grpc/einride-auth-service.proto
+  - type: Protobuf
+    url: grpc/einride-booking-service.proto
+  - type: Protobuf
+    url: grpc/einride-shipment-service.proto
+- aid: einride:einride-bookingservice-api
+  name: Einride BookingService API
+  description: The BookingService API from Einride — 7 operation(s) for bookingservice.
+  humanURL: https://extend.saga.einride.tech
+  baseURL: https://api.saga.einride.tech
+  tags:
+  - BookingService
+  properties:
+  - type: OpenAPI
+    url: openapi/einride-bookingservice-api-openapi.yml
+  - type: Protobuf
+    url: grpc/einride-auth-service.proto
+  - type: Protobuf
+    url: grpc/einride-booking-service.proto
+  - type: Protobuf
+    url: grpc/einride-shipment-service.proto
+- aid: einride:einride-shipmentservice-api
+  name: Einride ShipmentService API
+  description: The ShipmentService API from Einride — 6 operation(s) for shipmentservice.
+  humanURL: https://extend.saga.einride.tech
+  baseURL: https://api.saga.einride.tech
+  tags:
+  - ShipmentService
+  properties:
+  - type: OpenAPI
+    url: openapi/einride-shipmentservice-api-openapi.yml
+  - type: Protobuf
+    url: grpc/einride-auth-service.proto
+  - type: Protobuf
+    url: grpc/einride-booking-service.proto
+  - type: Protobuf
+    url: grpc/einride-shipment-service.proto
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/einride-agentic-access.yml
+- type: Authentication
+  url: authentication/einride-authentication.yml
+- type: Conventions
+  url: conventions/einride-conventions.yml
+- type: ErrorCatalog
+  url: errors/einride-problem-types.yml
+- type: DataModel
+  url: data-model/einride-data-model.yml
+- type: Lifecycle
+  url: lifecycle/einride-lifecycle.yml
+- type: ChangeLog
+  url: changelog/einride-changelog.yml
+- type: Conformance
+  url: conformance/einride-conformance.yml
+- type: Packages
+  url: packages/einride-packages.yml
+- type: CLI
+  url: cli/einride-cli.yml
+- type: Components
+  url: components/einride-components.yml
+- type: MCPServer
+  url: mcp/einride-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/einride-llms.txt
+- type: WellKnown
+  url: well-known/einride-well-known.yml
+- type: SecurityTxt
+  url: well-known/einride-security.txt
+- type: VulnerabilityDisclosure
+  url: security/einride-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.einride.tech/security/vulnerability-disclosure-policy
+- type: DomainSecurity
+  url: security/einride-domain-security.yml
+- type: DeveloperPortal
+  url: https://extend.saga.einride.tech
+- type: Documentation
+  url: https://github.com/einride/extend/blob/master/docs/apis.md
+- type: APIReference
+  url: https://extend.saga.einride.tech
+- type: GitHubOrganization
+  url: https://github.com/einride
+- type: SourceCode
+  url: https://github.com/einride/extend
+- type: Blog
+  url: https://einride.engineering/blog
+- type: SignUp
+  url: https://forms.gle/Sn3CYSgUgJbJE78X9
+- type: Support
+  url: https://www.einride.tech/contact
+- type: PrivacyPolicy
+  url: https://www.einride.tech/privacy/privacy-policy
 - type: Website
   url: https://www.einride.tech/
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

@@ -1,0 +1,87 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/einride-book-openapi-original.yml
+notes: >-
+  Entity-relationship graph derived from the Shipment/Booking OpenAPI $ref links,
+  AIP resource-name patterns, and id-reference fields. Resource names encode the
+  hierarchy: spaces/{space}/shipments/{shipment} and spaces/{space}/tours/{tour}.
+resource_name_hierarchy:
+  - spaces/{space}
+  - spaces/{space}/shipments/{shipment}
+  - spaces/{space}/tours/{tour}
+entities:
+  - name: Space
+    id_pattern: spaces/{space}
+    description: Top-level tenant/parent that owns shipments and tours.
+  - name: Shipment
+    id_pattern: spaces/{space}/shipments/{shipment}
+    schema: v1beta1Shipment
+    description: A demand to deliver goods from an origin to a destination.
+  - name: Tour
+    id_pattern: spaces/{space}/tours/{tour}
+    schema: v1beta1Tour
+    description: A preplanned definition of goods to pick up and deliver, where, when and in what order.
+  - name: Address
+    schema: v1beta1Address
+    description: A location where goods are picked up or delivered (with optional LatLng).
+  - name: Unit
+    schema: bookv1beta1Unit
+    description: A holder of goods (e.g. a EUR-pallet) with weight/length/volume.
+  - name: Vehicle
+    schema: v1beta1Vehicle
+    description: Vehicle / driver / carrier reference information for a shipment.
+  - name: TourStop
+    schema: TourStop
+    description: A stop (PICKUP or DELIVER) at an address within a tour.
+  - name: PreliminaryShipment
+    schema: TourPreliminaryShipment
+    description: Client-supplied shipment input included in a tour.
+relationships:
+  - from: Shipment
+    to: Space
+    type: belongs_to
+    via: space
+  - from: Shipment
+    to: Unit
+    type: has_many
+    via: units
+  - from: Shipment
+    to: Address
+    type: has_one
+    via: pickupAddress
+  - from: Shipment
+    to: Address
+    type: has_one
+    via: deliveryAddress
+  - from: Shipment
+    to: Vehicle
+    type: has_one
+    via: vehicle
+  - from: Shipment
+    to: Tour
+    type: belongs_to
+    via: tour
+  - from: Tour
+    to: Space
+    type: belongs_to
+    via: space
+  - from: Tour
+    to: PreliminaryShipment
+    type: has_many
+    via: preliminaryShipments
+  - from: Tour
+    to: TourStop
+    type: has_many
+    via: stops
+  - from: Tour
+    to: Shipment
+    type: has_many
+    via: createdShipments
+  - from: TourStop
+    to: Address
+    type: has_one
+    via: address
+  - from: PreliminaryShipment
+    to: Unit
+    type: has_many
+    via: units

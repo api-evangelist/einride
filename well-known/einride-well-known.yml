@@ -1,0 +1,41 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of Einride hosts
+notes: >-
+  The Extend developer portal (extend.saga.einride.tech) is a single-page app that
+  returns HTTP 200 with HTML for every /.well-known/ path, so those are catch-all
+  SPA responses, not real discovery documents. The only genuine well-known document
+  is the RFC 9116 security.txt published on einride.tech (served via a Google Cloud
+  Storage canonical). The api.saga.einride.tech gateway returns 401/403 to
+  unauthenticated /.well-known/ probes.
+hosts:
+  - host: https://einride.tech
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: einride-security.txt
+        note: redirects to https://e-security-assets-prod.storage.googleapis.com/security.txt
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api.saga.einride.tech
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+  - host: https://extend.saga.einride.tech
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        note: SPA catch-all (text/html), not a real security.txt
+      - path: /.well-known/openid-configuration
+        status: 200
+        note: SPA catch-all (text/html), not real OIDC discovery

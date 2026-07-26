@@ -1,0 +1,18 @@
+{
+  "provider": "einride",
+  "sources": [
+    "einride-authenticationservice-api-openapi.yml",
+    "einride-bookingservice-api-openapi.yml",
+    "einride-shipmentservice-api-openapi.yml"
+  ],
+  "outputs": [
+    "einride-authenticationservice-api-openapi.yml",
+    "einride-bookingservice-api-openapi.yml",
+    "einride-shipmentservice-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

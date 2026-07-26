@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://github.com/einride/extend/blob/master/docs/cli.md,
+  https://github.com/einride/extend/tree/master/cmd/saga
+name: saga
+description: >-
+  First-party CLI for calling the Einride Extend / Saga APIs from a local development
+  machine. Authenticates with an API-connection client ID + client secret, storing
+  credentials locally and fetching a fresh bearer token per request.
+binary_catalogued_in: packages/einride-packages.yml
+install:
+  - method: make
+    command: make
+    note: Building the repo with `make` installs the CLI.
+  - method: go install
+    command: go install github.com/einride/saga/cmd/saga@latest
+  - method: github-releases
+    url: https://github.com/einride/extend/releases
+auth_flow:
+  login: saga auth login --client-id <CLIENT_ID> --client-secret <CLIENT_SECRET>
+  logout: saga auth logout
+  note: Credentials are stored locally; a fresh auth token is fetched on every request.
+host_flags:
+  - flag: --eu-prod
+    host: eu.api.saga.einride.tech
+  - flag: --us-prod
+    host: us.api.saga.einride.tech
+  - flag: --address
+    description: Connect to an explicit address.
+  - flag: --insecure
+    description: Make an insecure connection (localhost only).
+  - flag: --token
+    description: Authenticate with an explicit bearer token.
+commands:
+  services:
+    - name: authentication
+      description: Authentication service.
+    - name: booking
+      description: Freight booking service (tours).
+    - name: shipment
+      description: Shipment service.
+  modules:
+    - name: auth
+      description: Authentication commands for the CLI (login/logout).
+  examples:
+    - saga auth login --client-id <CLIENT_ID> --client-secret <CLIENT_SECRET>
+    - saga shipment get-shipment --name spaces/123/shipments/234 --us-prod

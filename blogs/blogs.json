@@ -1,0 +1,14 @@
+{
+  "repo": "einride",
+  "feeds": [
+    {
+      "source": "https://github.com/einride/extend",
+      "feed_url": "https://github.com/einride/extend",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-07-25T15:00:33Z"
+}

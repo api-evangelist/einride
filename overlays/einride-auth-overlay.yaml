@@ -1,0 +1,18 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Einride Extend Authentication API
+  version: 1.0.0
+extends: openapi/einride-auth-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-19'
+      x-auth-flow: client-credentials (client ID + client secret exchanged for short-lived bearer token)
+      x-token-endpoint: /v1beta1/auth:exchangeSecret
+  - target: $
+    update:
+      host: api.saga.einride.tech
+      basePath: /
+  - target: $.paths['/v1beta1/auth:exchangeSecret'].post
+    update:
+      x-token-lifetime: short-lived; refresh before expireTime returned in the response

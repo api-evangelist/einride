@@ -1,0 +1,36 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/einride/extend/releases
+scheme: semver
+current_version: v0.55.0
+current_date: '2025-04-22'
+notes: >-
+  The Einride Extend repository publishes dated, semver GitHub Releases with
+  conventional-commit changelogs (Breaking Changes / Feature / Bug Fixes / Chores).
+  Recent window captured below; the Releases page is the source of truth.
+entries:
+  - version: v0.55.0
+    date: '2025-04-22'
+    breaking:
+      - Remove track-and-trace / shipment tracking event (TRA-2561).
+    highlights:
+      - Dependency bumps (golang.org/x/net, actions/setup-node).
+  - version: v0.54.0
+    date: '2025-03-18'
+    additions:
+      - Bump grpc-gateway to latest (introduces required body params).
+    highlights:
+      - go-dependencies group and sage bumps.
+  - version: v0.53.1
+    date: '2024-10-24'
+    fixes:
+      - "buf: remove unwanted rules."
+  - version: v0.53.0
+    date: '2024-10-18'
+    additions:
+      - "buf: adopt renamed default ruleset 'STANDARD'."
+      - "buf: update to v2 schema."
+  - version: v0.52.0
+    date: '2024-10-17'
+    additions:
+      - "Update to Go 1.23."

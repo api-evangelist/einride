@@ -1,0 +1,46 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  openapi/einride-book-openapi-original.yml, openapi/einride-auth-openapi-original.yml,
+  grpc/*.proto, https://github.com/einride/extend/blob/master/docs/apis.md
+notes: >-
+  Cross-cutting standards conformance derived from the specs and docs. Einride Extend is a
+  Google-AIP resource-oriented gRPC API exposed over HTTP via grpc-gateway transcoding.
+  No published third-party compliance certifications (SOC 2 / ISO 27001 / etc.) were found,
+  so no `Compliance` pointer is emitted.
+standards:
+  - id: google-aip
+    conforms: true
+    evidence: >-
+      APIs explicitly designed with the AIP framework (aip.dev); AIP-121/122 resource design,
+      AIP-131..134 standard methods, AIP-158 pagination, AIP-216 state transitions cited in specs.
+  - id: grpc
+    conforms: true
+    evidence: proto3 service definitions in grpc/; Buf module buf.build/einride/saga.
+  - id: grpc-http-transcoding
+    conforms: true
+    evidence: AIP-127 gRPC-to-HTTP transcoding via grpc-gateway (docs/apis.md, release notes).
+  - id: protobuf
+    conforms: true
+    evidence: Interface defined in Protocol Buffers (proto3).
+  - id: oauth2-bearer
+    conforms: true
+    evidence: Bearer-token auth; short-lived access token via client-credentials-style ExchangeSecret.
+  - id: google-rpc-status
+    conforms: true
+    evidence: Error responses use google.rpc.Status (rpcStatus) with code/message/details.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use google.rpc.Status, not application/problem+json.
+  - id: cursor-pagination
+    conforms: true
+    evidence: pageToken / nextPageToken pagination (AIP-158).
+  - id: rfc9116-security-txt
+    conforms: true
+    evidence: einride.tech publishes a /.well-known/security.txt (Contact/Policy/Expires).
+  - id: openapi
+    conforms: true
+    evidence: OpenAPI/Swagger 2.0 specs generated for both services (openapiv2/).
+  - id: idempotency-key
+    conforms: false
+    evidence: No documented Idempotency-Key header or AIP-155 request_id field.

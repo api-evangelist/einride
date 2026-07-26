@@ -1,0 +1,67 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://github.com/einride/extend/blob/master/docs/apis.md, openapi/einride-book-openapi-original.yml
+design_framework: Google AIP (aip.dev) — resource-oriented / standard methods
+authentication:
+  style: bearer-token
+  scheme: Authorization header, "Bearer <token>"
+  token_acquisition: >-
+    Exchange a client ID + client secret (issued by an Einride representative) for a
+    short-lived access token via AuthenticationService_ExchangeSecret; the response
+    accessToken is passed as the Bearer token on subsequent calls, refreshed before expireTime.
+  cross_ref: authentication/einride-authentication.yml
+resource_names:
+  convention: AIP-122 resource names
+  patterns:
+    - spaces/{space}
+    - spaces/{space}/shipments/{shipment}
+    - spaces/{space}/tours/{tour}
+  note: The resource name is the canonical identifier; store it, not a bare id.
+standard_methods:
+  convention: AIP-121 / AIP-131..134 (Get, List, Create, Update)
+  custom_methods:
+    - ":cancel"
+    - ":release"
+    - ":confirm"
+    - ":search"
+    - ":exchangeSecret"
+  note: Custom methods use the AIP colon suffix on the resource path.
+pagination:
+  style: page-token (AIP-158)
+  request_params: [pageSize, pageToken, skip, orderBy, showDeleted]
+  response_fields: [nextPageToken, totalSize]
+  order_by:
+    supported_values: ["create_time desc", "create_time asc"]
+    default: create_time desc
+uniqueness_key:
+  field: externalReferenceId
+  scope: space
+  note: >-
+    On shipments and tours, externalReferenceId (when supplied) must be unique within the
+    space and can be used to look a resource up via SearchTours. This is a de-duplication /
+    external-reference key, NOT a documented retry idempotency-key header.
+idempotency:
+  documented: false
+  note: >-
+    Einride Extend does not document an Idempotency-Key header or AIP-155 request_id field.
+    Retry-safety relies on the externalReferenceId uniqueness constraint above.
+versioning:
+  scheme: uri-path
+  current: v1beta1
+  stability: alpha / early-access; project versioned semver v0.x (unstable)
+  cross_ref: lifecycle/einride-lifecycle.yml
+error_envelope:
+  format: google.rpc.Status (gRPC status)
+  media_type: application/json
+  fields: [code, message, details]
+  note: HTTP errors are gRPC-to-HTTP transcoded google.rpc.Status objects, not RFC 9457 problem+json.
+  cross_ref: errors/einride-problem-types.yml
+protocols:
+  - gRPC (primary; proto source at grpc/, Buf module buf.build/einride/saga)
+  - HTTP/REST (via AIP-127 gRPC-to-HTTP transcoding)
+regions:
+  - eu.api.saga.einride.tech
+  - us.api.saga.einride.tech
+rate_limit_signaling:
+  documented: false

@@ -1,0 +1,7 @@
+Contact: mailto:security@einride.tech
+Expires: 2026-07-03T23:00:00.000Z
+Policy: https://www.einride.tech/security/vulnerability-disclosure-policy
+Acknowledgments: https://www.einride.tech/security-acknowledgments.txt
+Preferred-Languages: en
+Canonical: https://e-security-assets-prod.storage.googleapis.com/security.txt
+Hiring: https://careers.einride.tech/

@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/einride/extend
+notes: >-
+  Einride's documented Go and TypeScript API SDKs (github.com/einride/extend-go,
+  github.com/einride/extend-typescript) both return HTTP 404 as of this pass, so
+  they are intentionally NOT listed as packages. The saga CLI, the @einride/ui
+  React component library, and the Buf Schema Registry proto module are the
+  first-party, resolvable developer packages.
+packages:
+  - language: go
+    registry: github-releases
+    name: saga
+    module: github.com/einride/saga/cmd/saga
+    url: https://github.com/einride/extend/releases
+    install: go install github.com/einride/saga/cmd/saga@latest
+    description: The saga CLI for calling the Einride Extend / Saga APIs from the command line.
+    official: true
+  - language: typescript
+    registry: npm
+    name: "@einride/ui"
+    url: https://www.npmjs.com/package/@einride/ui
+    install: npm install @einride/ui
+    description: Einride's React component library / design system for building Saga apps.
+    official: true
+  - language: protobuf
+    registry: buf
+    name: einride/saga
+    url: https://buf.build/einride/saga
+    install: buf generate buf.build/einride/saga
+    description: Buf Schema Registry module for the Saga gRPC APIs; use Buf remote generation to build a client in any language.
+    official: true
