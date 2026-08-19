@@ -1,0 +1,981 @@
+{
+  "item": [
+    {
+      "id": "06425c88-476c-4271-b58d-07fdbf3a05df",
+      "name": "ShipmentService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9390ef19-c037-471b-bb8e-4b66f92f2af2",
+          "name": "List shipments in a space.",
+          "request": {
+            "name": "List shipments in a space.",
+            "description": {
+              "content": "This is an AIP standard [List](https://google.aip.dev/132) method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1beta1",
+                ":parent",
+                "shipments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Requested page size. Server may return fewer shipments than requested.\nIf unspecified, server will pick an appropriate default."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "A token identifying a page of results the server should return.\nTypically, this is the value of ListShipmentsResponse.page_token\nreturned from the previous call to `ListShipments` method."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "How the results should be sorted. Presently, the only permitted values are:\n\n- `\"create_time desc\"` (default if no order_by is specified)\n- `\"create_time asc\"`\nExample:\n```\norder_by = \"create_time desc\"\n``"
+                },
+                {
+                  "disabled": false,
+                  "key": "showDeleted",
+                  "value": "<boolean>",
+                  "description": "Controls whether deleted shipments should be returned. Defaults to false."
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>",
+                  "description": "Allows to skip results."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "parent",
+                  "description": "(Required) The resource name of the parent, which owns this collection of shipments.\nFormat: spaces/{space}"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16910186-05ec-4778-b983-34d530f63021",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":parent",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "parent",
+                      "description": "(Required) The resource name of the parent, which owns this collection of shipments.\nFormat: spaces/{space}"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shipments\": [\n    {\n      \"sender\": \"string\",\n      \"deliveryAddress\": {\n        \"recipient\": \"string\",\n        \"line1\": \"string\",\n        \"postalCode\": \"string\",\n        \"city\": \"string\",\n        \"regionCode\": \"string\",\n        \"co\": \"string\",\n        \"line2\": \"string\",\n        \"stateCode\": \"string\",\n        \"displayName\": \"string\",\n        \"contactInfo\": \"string\",\n        \"latLng\": {\n          \"latitude\": 7128.186111847753,\n          \"longitude\": 4785.369158240229\n        },\n        \"externalReferenceId\": \"string\"\n      },\n      \"units\": [\n        {\n          \"type\": \"string\",\n          \"weight\": {\n            \"value\": 6965.169944632815,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"externalReferenceId\": \"string\",\n          \"description\": \"string\",\n          \"trackingId\": \"string\",\n          \"length\": {\n            \"value\": 9934.414466517143,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"height\": {\n            \"value\": 7821.878940118785,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"width\": {\n            \"value\": 8284.065683805982,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"volume\": {\n            \"value\": 8309.158079768375,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"type\": \"string\",\n          \"weight\": {\n            \"value\": 8213.245436449211,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"externalReferenceId\": \"string\",\n          \"description\": \"string\",\n          \"trackingId\": \"string\",\n          \"length\": {\n            \"value\": 158.2174624877697,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"height\": {\n            \"value\": 9029.773054154106,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"width\": {\n            \"value\": 6056.934240953192,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"volume\": {\n            \"value\": 7465.417034108645,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"name\": \"string\",\n      \"space\": \"string\",\n      \"createTime\": \"1990-08-24T20:45:21.599Z\",\n      \"updateTime\": \"2022-09-24T21:11:33.620Z\",\n      \"deleteTime\": \"1993-03-12T22:09:14.986Z\",\n      \"trackingId\": \"string\",\n      \"pickupAddress\": {\n        \"recipient\": \"string\",\n        \"line1\": \"string\",\n        \"postalCode\": \"string\",\n        \"city\": \"string\",\n        \"regionCode\": \"string\",\n        \"co\": \"string\",\n        \"line2\": \"string\",\n        \"stateCode\": \"string\",\n        \"displayName\": \"string\",\n        \"contactInfo\": \"string\",\n        \"latLng\": {\n          \"latitude\": 4592.739949550334,\n          \"longitude\": 1093.108376766273\n        },\n        \"externalReferenceId\": \"string\"\n      },\n      \"pickupInstructions\": \"string\",\n      \"requestedPickupStartTime\": \"2015-02-05T00:16:09.707Z\",\n      \"requestedPickupEndTime\": \"1991-11-26T05:05:27.848Z\",\n      \"deliveryInstructions\": \"string\",\n      \"requestedDeliveryStartTime\": \"1969-12-26T08:31:20.276Z\",\n      \"requestedDeliveryEndTime\": \"1948-04-02T19:08:41.335Z\",\n      \"externalReferenceId\": \"string\",\n      \"tour\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"deliveryState\": \"AWAITING\",\n      \"vehicle\": {\n        \"referenceId\": \"string\",\n        \"driverReferenceId\": \"string\",\n        \"carrierReferenceId\": \"string\"\n      },\n      \"annotations\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"service\": \"FTL\"\n    },\n    {\n      \"sender\": \"string\",\n      \"deliveryAddress\": {\n        \"recipient\": \"string\",\n        \"line1\": \"string\",\n        \"postalCode\": \"string\",\n        \"city\": \"string\",\n        \"regionCode\": \"string\",\n        \"co\": \"string\",\n        \"line2\": \"string\",\n        \"stateCode\": \"string\",\n        \"displayName\": \"string\",\n        \"contactInfo\": \"string\",\n        \"latLng\": {\n          \"latitude\": 60.52201048641237,\n          \"longitude\": 4310.6365116253755\n        },\n        \"externalReferenceId\": \"string\"\n      },\n      \"units\": [\n        {\n          \"type\": \"string\",\n          \"weight\": {\n            \"value\": 9641.888193647113,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"externalReferenceId\": \"string\",\n          \"description\": \"string\",\n          \"trackingId\": \"string\",\n          \"length\": {\n            \"value\": 6318.808131833354,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"height\": {\n            \"value\": 3968.6726066808064,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"width\": {\n            \"value\": 5457.784788964312,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"volume\": {\n            \"value\": 417.0949821733083,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"type\": \"string\",\n          \"weight\": {\n            \"value\": 6927.430586579516,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"externalReferenceId\": \"string\",\n          \"description\": \"string\",\n          \"trackingId\": \"string\",\n          \"length\": {\n            \"value\": 4725.116457183451,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"height\": {\n            \"value\": 1190.929922038444,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"width\": {\n            \"value\": 6627.358213961288,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"volume\": {\n            \"value\": 7522.959103765111,\n            \"unit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"name\": \"string\",\n      \"space\": \"string\",\n      \"createTime\": \"2006-10-21T14:57:11.804Z\",\n      \"updateTime\": \"2015-05-07T22:34:31.014Z\",\n      \"deleteTime\": \"2013-12-22T13:44:29.581Z\",\n      \"trackingId\": \"string\",\n      \"pickupAddress\": {\n        \"recipient\": \"string\",\n        \"line1\": \"string\",\n        \"postalCode\": \"string\",\n        \"city\": \"string\",\n        \"regionCode\": \"string\",\n        \"co\": \"string\",\n        \"line2\": \"string\",\n        \"stateCode\": \"string\",\n        \"displayName\": \"string\",\n        \"contactInfo\": \"string\",\n        \"latLng\": {\n          \"latitude\": 7898.59279495805,\n          \"longitude\": 8418.667405363902\n        },\n        \"externalReferenceId\": \"string\"\n      },\n      \"pickupInstructions\": \"string\",\n      \"requestedPickupStartTime\": \"2007-03-16T06:35:38.032Z\",\n      \"requestedPickupEndTime\": \"1974-12-16T15:29:54.524Z\",\n      \"deliveryInstructions\": \"string\",\n      \"requestedDeliveryStartTime\": \"1971-10-23T01:35:50.490Z\",\n      \"requestedDeliveryEndTime\": \"2012-11-17T18:07:32.509Z\",\n      \"externalReferenceId\": \"string\",\n      \"tour\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"deliveryState\": \"AWAITING\",\n      \"vehicle\": {\n        \"referenceId\": \"string\",\n        \"driverReferenceId\": \"string\",\n        \"carrierReferenceId\": \"string\"\n      },\n      \"annotations\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"service\": \"PALLET\"\n    }\n  ],\n  \"nextPageToken\": \"string\",\n  \"totalSize\": 1493\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84a0bda0-94b5-4adb-ad63-0ba961d59254",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":parent",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "parent",
+                      "description": "(Required) The resource name of the parent, which owns this collection of shipments.\nFormat: spaces/{space}"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 4715,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e67c489-3652-44e7-ac75-a01cc83e69ac",
+          "name": "Update a shipment in a space.",
+          "request": {
+            "name": "Update a shipment in a space.",
+            "description": {
+              "content": "This is an AIP standard [Update](https://google.aip.dev/134) method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1beta1",
+                ":shipment.name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shipment.name",
+                  "description": "(Required) The resource name of the shipment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sender\": \"<string>\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"<string>\",\n  \"requestedPickupStartTime\": \"<dateTime>\",\n  \"requestedPickupEndTime\": \"<dateTime>\",\n  \"deliveryInstructions\": \"<string>\",\n  \"requestedDeliveryStartTime\": \"<dateTime>\",\n  \"requestedDeliveryEndTime\": \"<dateTime>\",\n  \"externalReferenceId\": \"<string>\",\n  \"tour\": \"<string>\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"service\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b69bed8e-580f-41d0-9a27-6ed248a219a3",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":shipment.name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipment.name",
+                      "description": "(Required) The resource name of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender\": \"<string>\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"<string>\",\n  \"requestedPickupStartTime\": \"<dateTime>\",\n  \"requestedPickupEndTime\": \"<dateTime>\",\n  \"deliveryInstructions\": \"<string>\",\n  \"requestedDeliveryStartTime\": \"<dateTime>\",\n  \"requestedDeliveryEndTime\": \"<dateTime>\",\n  \"externalReferenceId\": \"<string>\",\n  \"tour\": \"<string>\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"service\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender\": \"string\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"string\",\n  \"space\": \"string\",\n  \"createTime\": \"1980-02-03T22:30:18.242Z\",\n  \"updateTime\": \"2003-05-14T20:20:14.542Z\",\n  \"deleteTime\": \"1986-06-13T20:26:27.339Z\",\n  \"trackingId\": \"string\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"string\",\n  \"requestedPickupStartTime\": \"1992-05-06T05:18:09.938Z\",\n  \"requestedPickupEndTime\": \"2026-03-09T14:04:16.760Z\",\n  \"deliveryInstructions\": \"string\",\n  \"requestedDeliveryStartTime\": \"1979-10-31T09:52:33.228Z\",\n  \"requestedDeliveryEndTime\": \"1959-12-06T20:56:18.873Z\",\n  \"externalReferenceId\": \"string\",\n  \"tour\": \"string\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\",\n    \"key_4\": \"string\"\n  },\n  \"service\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9ae06f9-10a9-4225-9fb9-e0c3b3f12ef4",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":shipment.name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipment.name",
+                      "description": "(Required) The resource name of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender\": \"<string>\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"<string>\",\n  \"requestedPickupStartTime\": \"<dateTime>\",\n  \"requestedPickupEndTime\": \"<dateTime>\",\n  \"deliveryInstructions\": \"<string>\",\n  \"requestedDeliveryStartTime\": \"<dateTime>\",\n  \"requestedDeliveryEndTime\": \"<dateTime>\",\n  \"externalReferenceId\": \"<string>\",\n  \"tour\": \"<string>\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"service\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8336,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a583d6b1-83ae-4aa0-b738-b3a655a7cb46",
+          "name": "Get a shipment.",
+          "request": {
+            "name": "Get a shipment.",
+            "description": {
+              "content": "This is an AIP standard [Get](https://google.aip.dev/131) method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1beta1",
+                ":shipment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shipment",
+                  "description": "(Required) The resource name of the shipment to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52ae3fd2-55df-40b2-a8dd-6d3f2b3ad14d",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":shipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipment",
+                      "description": "(Required) The resource name of the shipment to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender\": \"string\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"string\",\n  \"space\": \"string\",\n  \"createTime\": \"1980-02-03T22:30:18.242Z\",\n  \"updateTime\": \"2003-05-14T20:20:14.542Z\",\n  \"deleteTime\": \"1986-06-13T20:26:27.339Z\",\n  \"trackingId\": \"string\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"string\",\n  \"requestedPickupStartTime\": \"1992-05-06T05:18:09.938Z\",\n  \"requestedPickupEndTime\": \"2026-03-09T14:04:16.760Z\",\n  \"deliveryInstructions\": \"string\",\n  \"requestedDeliveryStartTime\": \"1979-10-31T09:52:33.228Z\",\n  \"requestedDeliveryEndTime\": \"1959-12-06T20:56:18.873Z\",\n  \"externalReferenceId\": \"string\",\n  \"tour\": \"string\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\",\n    \"key_4\": \"string\"\n  },\n  \"service\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e52bfe40-8ab7-4a42-bc89-8797719abbc2",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":shipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipment",
+                      "description": "(Required) The resource name of the shipment to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8336,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd456340-079e-429e-b2e4-29d7f387434f",
+          "name": "Cancel a shipment.",
+          "request": {
+            "name": "Cancel a shipment.",
+            "description": {
+              "content": "The state of the shipment after cancelling it is CANCELLED.\n\nThis is an AIP [state](https://google.aip.dev/216) transition method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1beta1",
+                "{{shipment}}:cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "729d81d0-e38f-418b-87dc-d3a2d5a2f3cc",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    "{{shipment}}:cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender\": \"string\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"string\",\n  \"space\": \"string\",\n  \"createTime\": \"1980-02-03T22:30:18.242Z\",\n  \"updateTime\": \"2003-05-14T20:20:14.542Z\",\n  \"deleteTime\": \"1986-06-13T20:26:27.339Z\",\n  \"trackingId\": \"string\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"string\",\n  \"requestedPickupStartTime\": \"1992-05-06T05:18:09.938Z\",\n  \"requestedPickupEndTime\": \"2026-03-09T14:04:16.760Z\",\n  \"deliveryInstructions\": \"string\",\n  \"requestedDeliveryStartTime\": \"1979-10-31T09:52:33.228Z\",\n  \"requestedDeliveryEndTime\": \"1959-12-06T20:56:18.873Z\",\n  \"externalReferenceId\": \"string\",\n  \"tour\": \"string\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\",\n    \"key_4\": \"string\"\n  },\n  \"service\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd1f5945-d024-4e14-ad17-87b29e304afd",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    "{{shipment}}:cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8336,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c5189382-c351-42fe-8007-899ede8b91a3",
+          "name": "Release a shipment.",
+          "request": {
+            "name": "Release a shipment.",
+            "description": {
+              "content": "The state of the shipment after releasing it is RELEASED.\n\nThis is an AIP [state](https://google.aip.dev/216) transition method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1beta1",
+                "{{shipment}}:release"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "155653e1-bf73-43ef-b3a0-68d35f37fa22",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    "{{shipment}}:release"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender\": \"string\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"string\",\n  \"space\": \"string\",\n  \"createTime\": \"1980-02-03T22:30:18.242Z\",\n  \"updateTime\": \"2003-05-14T20:20:14.542Z\",\n  \"deleteTime\": \"1986-06-13T20:26:27.339Z\",\n  \"trackingId\": \"string\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"string\",\n  \"requestedPickupStartTime\": \"1992-05-06T05:18:09.938Z\",\n  \"requestedPickupEndTime\": \"2026-03-09T14:04:16.760Z\",\n  \"deliveryInstructions\": \"string\",\n  \"requestedDeliveryStartTime\": \"1979-10-31T09:52:33.228Z\",\n  \"requestedDeliveryEndTime\": \"1959-12-06T20:56:18.873Z\",\n  \"externalReferenceId\": \"string\",\n  \"tour\": \"string\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\",\n    \"key_4\": \"string\"\n  },\n  \"service\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d76f0509-b89b-4e8f-bcb5-876c6b34c39e",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    "{{shipment}}:release"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8336,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42ba8988-93b1-42c1-8643-630e71b4ce83",
+          "name": "Create a shipment in a space.",
+          "request": {
+            "name": "Create a shipment in a space.",
+            "description": {
+              "content": "This is an AIP standard [Create](https://google.aip.dev/133) method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1beta1",
+                ":space",
+                "shipments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "space",
+                  "description": "(Required) The parent space in which to create the shipment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sender\": \"<string>\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"<string>\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"<string>\",\n  \"requestedPickupStartTime\": \"<dateTime>\",\n  \"requestedPickupEndTime\": \"<dateTime>\",\n  \"deliveryInstructions\": \"<string>\",\n  \"requestedDeliveryStartTime\": \"<dateTime>\",\n  \"requestedDeliveryEndTime\": \"<dateTime>\",\n  \"externalReferenceId\": \"<string>\",\n  \"tour\": \"<string>\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"service\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ca5ea88f-f772-4cce-96ea-c93ed5c8a574",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":space",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "space",
+                      "description": "(Required) The parent space in which to create the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender\": \"<string>\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"<string>\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"<string>\",\n  \"requestedPickupStartTime\": \"<dateTime>\",\n  \"requestedPickupEndTime\": \"<dateTime>\",\n  \"deliveryInstructions\": \"<string>\",\n  \"requestedDeliveryStartTime\": \"<dateTime>\",\n  \"requestedDeliveryEndTime\": \"<dateTime>\",\n  \"externalReferenceId\": \"<string>\",\n  \"tour\": \"<string>\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"service\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender\": \"<string>\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"trackingId\": \"string\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"<string>\",\n  \"space\": \"string\",\n  \"createTime\": \"1982-05-23T14:49:19.272Z\",\n  \"updateTime\": \"1954-11-24T00:47:00.031Z\",\n  \"deleteTime\": \"1975-01-18T18:31:32.472Z\",\n  \"trackingId\": \"string\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"<string>\",\n  \"requestedPickupStartTime\": \"<dateTime>\",\n  \"requestedPickupEndTime\": \"<dateTime>\",\n  \"deliveryInstructions\": \"<string>\",\n  \"requestedDeliveryStartTime\": \"<dateTime>\",\n  \"requestedDeliveryEndTime\": \"<dateTime>\",\n  \"externalReferenceId\": \"<string>\",\n  \"tour\": \"<string>\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"service\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac4aca8a-6704-4305-8a25-3e62f30d491c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    ":space",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "space",
+                      "description": "(Required) The parent space in which to create the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender\": \"<string>\",\n  \"deliveryAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"units\": [\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"weight\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"externalReferenceId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"length\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"height\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"width\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      },\n      \"volume\": {\n        \"value\": \"<double>\",\n        \"unit\": \"<string>\"\n      }\n    }\n  ],\n  \"name\": \"<string>\",\n  \"pickupAddress\": {\n    \"recipient\": \"<string>\",\n    \"line1\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"co\": \"<string>\",\n    \"line2\": \"<string>\",\n    \"stateCode\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"contactInfo\": \"<string>\",\n    \"latLng\": {\n      \"latitude\": \"<double>\",\n      \"longitude\": \"<double>\"\n    },\n    \"externalReferenceId\": \"<string>\"\n  },\n  \"pickupInstructions\": \"<string>\",\n  \"requestedPickupStartTime\": \"<dateTime>\",\n  \"requestedPickupEndTime\": \"<dateTime>\",\n  \"deliveryInstructions\": \"<string>\",\n  \"requestedDeliveryStartTime\": \"<dateTime>\",\n  \"requestedDeliveryEndTime\": \"<dateTime>\",\n  \"externalReferenceId\": \"<string>\",\n  \"tour\": \"<string>\",\n  \"state\": \"<string>\",\n  \"deliveryState\": \"<string>\",\n  \"vehicle\": {\n    \"referenceId\": \"<string>\",\n    \"driverReferenceId\": \"<string>\",\n    \"carrierReferenceId\": \"<string>\"\n  },\n  \"annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"service\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8336,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The resource name of the shipment to cancel.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "shipment"
+    }
+  ],
+  "info": {
+    "_postman_id": "15522db6-2e9a-4854-aa12-a18b5b001aba",
+    "name": "Einride Extend: Authentication AuthenticationService ShipmentService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Based on REST principles, with optional support for gRPC, the Einride Extend API enables modern API-based integration to Einride Saga.\n\nAPI design\n----------\n\nThe Einride Extend APIs are designed using the [AIP](https://aip.dev) design framework, which means that they are resource-oriented and work like standard [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) APIs.\n\n### Resource-oriented design\n\n*See also: [AIP-121: Resource-oriented design](https://google.aip.dev/121)*\n\nThe fundamental building blocks of this API are individually-named resources (nouns) and the relationships and hierarchy that exist between them.\n\nA number of standard methods (verbs) provide the semantics for common [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations. Custom methods are available where custom operations are required, such as for cancelling shipments.\n\n### Resource names\n\n*See also: [AIP-122: Resource names](https://google.aip.dev/122)*\n\nThis API exposes resources which users are able to create, retrieve, and manipulate. Resources are named: each resource has a unique identifier that users use to reference that resource, and these names are what users should store as the canonical names for the resources.\n\nAs such, the unique identifier for a resource in this API is called a *resource name*.\n\nProtocols\n---------\n\nThe Einride Extend APIs support both HTTP and gRPC protocols.\n\n### HTTP\n\nThe Einride Extend APIs are available as RESTful HTTP endpoints.\n\nSee this document for the OpenAPI specifications, or use the API documentation at [extend.saga.einride.tech](https://extend.saga.einride.tech), where you can also try out the REST APIs and make example requests.\n\n### gRPC\n\n[gRPC](https://grpc.io) is a high performance, open source universal RPC framework that works across programming languages and platforms.\n\nTo for more information about using Einride Extend APIs via gRPC, please contact your Einride representative.\n\nAuthentication\n---------\n\nThe Einride Extend use standard [Bearer token authentication](https://swagger.io/docs/specification/authentication/bearer-authentication/). When using the HTTP APIs, make sure to always provide the following header in all requests:\n\n\n    Authorization: Bearer <token>\n\n\nWhere `<token>` is the authentication token for your integration. \n\n\nObtain a short-lived authentication token by using the ExchangeSecret API documented below. \n\n\nPlease contact your Einride representative to obtain a client ID and client secret for your integration. \n\nAPI address\n---------\n\nThe Einride Extend API is available via the following root address:\n\nhttps://api.saga.einride.tech\n",
+      "type": "text/plain"
+    }
+  }
+}

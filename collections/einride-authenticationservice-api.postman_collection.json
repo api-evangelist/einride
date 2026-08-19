@@ -1,0 +1,166 @@
+{
+  "item": [
+    {
+      "id": "50919706-c8b0-4267-abaf-0ce0e8a7d673",
+      "name": "AuthenticationService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5e6de4a9-8f0d-4d10-82ab-5d8a6df4a4ad",
+          "name": "Exchange secret for access token.",
+          "request": {
+            "name": "Exchange secret for access token.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1beta1",
+                "auth:exchangeSecret"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientId\": \"<string>\",\n  \"clientSecret\": \"<password>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7fb96132-88d4-493e-8b40-dad77e1c96de",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    "auth:exchangeSecret"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"clientSecret\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessToken\": \"string\",\n  \"expireTime\": \"1984-05-30T12:14:25.031Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6b75820-6505-4b69-8341-bd7deb4d98cb",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta1",
+                    "auth:exchangeSecret"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"clientSecret\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 310,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ce2f8c54-4222-4b91-adfc-055dc48e17b6",
+    "name": "Einride Extend: Authentication AuthenticationService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Based on REST principles, with optional support for gRPC, the Einride Extend API enables modern API-based integration to Einride Saga.\n\nAPI design\n----------\n\nThe Einride Extend APIs are designed using the [AIP](https://aip.dev) design framework, which means that they are resource-oriented and work like standard [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) APIs.\n\n### Resource-oriented design\n\n*See also: [AIP-121: Resource-oriented design](https://google.aip.dev/121)*\n\nThe fundamental building blocks of this API are individually-named resources (nouns) and the relationships and hierarchy that exist between them.\n\nA number of standard methods (verbs) provide the semantics for common [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations. Custom methods are available where custom operations are required, such as for cancelling shipments.\n\n### Resource names\n\n*See also: [AIP-122: Resource names](https://google.aip.dev/122)*\n\nThis API exposes resources which users are able to create, retrieve, and manipulate. Resources are named: each resource has a unique identifier that users use to reference that resource, and these names are what users should store as the canonical names for the resources.\n\nAs such, the unique identifier for a resource in this API is called a *resource name*.\n\nProtocols\n---------\n\nThe Einride Extend APIs support both HTTP and gRPC protocols.\n\n### HTTP\n\nThe Einride Extend APIs are available as RESTful HTTP endpoints.\n\nSee this document for the OpenAPI specifications, or use the API documentation at [extend.saga.einride.tech](https://extend.saga.einride.tech), where you can also try out the REST APIs and make example requests.\n\n### gRPC\n\n[gRPC](https://grpc.io) is a high performance, open source universal RPC framework that works across programming languages and platforms.\n\nTo for more information about using Einride Extend APIs via gRPC, please contact your Einride representative.\n\nAuthentication\n---------\n\nThe Einride Extend use standard [Bearer token authentication](https://swagger.io/docs/specification/authentication/bearer-authentication/). When using the HTTP APIs, make sure to always provide the following header in all requests:\n\n\n    Authorization: Bearer <token>\n\n\nWhere `<token>` is the authentication token for your integration. \n\n\nObtain a short-lived authentication token by using the ExchangeSecret API documented below. \n\n\nPlease contact your Einride representative to obtain a client ID and client secret for your integration. \n\nAPI address\n---------\n\nThe Einride Extend API is available via the following root address:\n\nhttps://api.saga.einride.tech\n",
+      "type": "text/plain"
+    }
+  }
+}

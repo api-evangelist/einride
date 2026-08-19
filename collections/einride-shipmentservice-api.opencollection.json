@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Einride Extend: Authentication AuthenticationService ShipmentService API",
+    "version": "v1beta1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ShipmentService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List shipments in a space.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1beta1/:parent/shipments",
+            "params": [
+              {
+                "name": "parent",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the parent, which owns this collection of shipments.\nFormat: spaces/{space}"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Requested page size. Server may return fewer shipments than requested.\nIf unspecified, server will pick an appropriate default."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "A token identifying a page of results the server should return.\nTypically, this is the value of ListShipmentsResponse.page_token\nreturned from the previous call to `ListShipments` method."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "How the results should be sorted. Presently, the only permitted values are:\n\n- `\"create_time desc\"` (default if no order_by is specified)\n- `\"create_time asc\"`\nExample:\n```\norder_by = \"create_time desc\"\n``"
+              },
+              {
+                "name": "showDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Controls whether deleted shipments should be returned. Defaults to false."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Allows to skip results."
+              }
+            ]
+          },
+          "docs": "This is an AIP standard [List](https://google.aip.dev/132) method."
+        },
+        {
+          "info": {
+            "name": "Update a shipment in a space.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1beta1/:shipment.name",
+            "params": [
+              {
+                "name": "shipment.name",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the shipment."
+              }
+            ]
+          },
+          "docs": "This is an AIP standard [Update](https://google.aip.dev/134) method."
+        },
+        {
+          "info": {
+            "name": "Get a shipment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1beta1/:shipment",
+            "params": [
+              {
+                "name": "shipment",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the shipment to retrieve."
+              }
+            ]
+          },
+          "docs": "This is an AIP standard [Get](https://google.aip.dev/131) method."
+        },
+        {
+          "info": {
+            "name": "Cancel a shipment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1beta1/:shipment:cancel",
+            "params": [
+              {
+                "name": "shipment",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the shipment to cancel."
+              }
+            ]
+          },
+          "docs": "The state of the shipment after cancelling it is CANCELLED.\n\nThis is an AIP [state](https://google.aip.dev/216) transition method."
+        },
+        {
+          "info": {
+            "name": "Release a shipment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1beta1/:shipment:release",
+            "params": [
+              {
+                "name": "shipment",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the shipment to release."
+              }
+            ]
+          },
+          "docs": "The state of the shipment after releasing it is RELEASED.\n\nThis is an AIP [state](https://google.aip.dev/216) transition method."
+        },
+        {
+          "info": {
+            "name": "Create a shipment in a space.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1beta1/:space/shipments",
+            "params": [
+              {
+                "name": "space",
+                "value": "",
+                "type": "path",
+                "description": "The parent space in which to create the shipment."
+              }
+            ]
+          },
+          "docs": "This is an AIP standard [Create](https://google.aip.dev/133) method."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

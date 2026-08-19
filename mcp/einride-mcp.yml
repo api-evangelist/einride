@@ -2,55 +2,60 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/einride-book-openapi-original.yml, openapi/einride-auth-openapi-original.yml
-notes: >-
-  No official hosted or remote MCP server was found for Einride Extend / Saga
-  (searched docs, npm @modelcontextprotocol, and MCP registries). This is a
-  DERIVED candidate tool list, one tool per OpenAPI operation, that a future MCP
-  server could expose. Every source_operation id is verified present in the specs.
+notes: No official hosted or remote MCP server was found for Einride Extend / Saga (searched docs, npm
+  @modelcontextprotocol, and MCP registries). This is a DERIVED candidate tool list, one tool per OpenAPI
+  operation, that a future MCP server could expose. Every source_operation id is verified present in the
+  specs.
 server:
   name: einride-saga
   transport: http
   url: null
 tools:
-  - name: exchange_secret
-    description: Exchange a client ID and client secret for a short-lived bearer access token.
-    source_operation: openapi/einride-auth-openapi-original.yml#AuthenticationService_ExchangeSecret
-  - name: create_shipment
-    description: Create a shipment in a space.
-    source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_CreateShipment
-  - name: get_shipment
-    description: Get a single shipment by resource name.
-    source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_GetShipment
-  - name: list_shipments
-    description: List shipments in a space.
-    source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_ListShipments
-  - name: update_shipment
-    description: Update a shipment in a space.
-    source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_UpdateShipment
-  - name: release_shipment
-    description: Release a shipment (state transitions to RELEASED).
-    source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_ReleaseShipment
-  - name: cancel_shipment
-    description: Cancel a shipment (state transitions to CANCELLED).
-    source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_CancelShipment
-  - name: create_tour
-    description: Create a truck tour booking in a space.
-    source_operation: openapi/einride-book-openapi-original.yml#BookingService_CreateTour
-  - name: get_tour
-    description: Get an existing truck tour booking.
-    source_operation: openapi/einride-book-openapi-original.yml#BookingService_GetTour
-  - name: list_tours
-    description: List existing truck tours in a space.
-    source_operation: openapi/einride-book-openapi-original.yml#BookingService_ListTours
-  - name: search_tours
-    description: Search tours in a space by external reference id.
-    source_operation: openapi/einride-book-openapi-original.yml#BookingService_SearchTours
-  - name: update_tour
-    description: Update a truck tour booking.
-    source_operation: openapi/einride-book-openapi-original.yml#BookingService_UpdateTour
-  - name: confirm_tour
-    description: Confirm a provisional tour, creating shipments when accepted by Saga.
-    source_operation: openapi/einride-book-openapi-original.yml#BookingService_ConfirmTour
-  - name: cancel_tour
-    description: Cancel a truck tour booking.
-    source_operation: openapi/einride-book-openapi-original.yml#BookingService_CancelTour
+- name: exchange_secret
+  description: Exchange a client ID and client secret for a short-lived bearer access token.
+  source_operation: openapi/einride-auth-openapi-original.yml#AuthenticationService_ExchangeSecret
+- name: create_shipment
+  description: Create a shipment in a space.
+  source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_CreateShipment
+- name: get_shipment
+  description: Get a single shipment by resource name.
+  source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_GetShipment
+- name: list_shipments
+  description: List shipments in a space.
+  source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_ListShipments
+- name: update_shipment
+  description: Update a shipment in a space.
+  source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_UpdateShipment
+- name: release_shipment
+  description: Release a shipment (state transitions to RELEASED).
+  source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_ReleaseShipment
+- name: cancel_shipment
+  description: Cancel a shipment (state transitions to CANCELLED).
+  source_operation: openapi/einride-book-openapi-original.yml#ShipmentService_CancelShipment
+- name: create_tour
+  description: Create a truck tour booking in a space.
+  source_operation: openapi/einride-book-openapi-original.yml#BookingService_CreateTour
+- name: get_tour
+  description: Get an existing truck tour booking.
+  source_operation: openapi/einride-book-openapi-original.yml#BookingService_GetTour
+- name: list_tours
+  description: List existing truck tours in a space.
+  source_operation: openapi/einride-book-openapi-original.yml#BookingService_ListTours
+- name: search_tours
+  description: Search tours in a space by external reference id.
+  source_operation: openapi/einride-book-openapi-original.yml#BookingService_SearchTours
+- name: update_tour
+  description: Update a truck tour booking.
+  source_operation: openapi/einride-book-openapi-original.yml#BookingService_UpdateTour
+- name: confirm_tour
+  description: Confirm a provisional tour, creating shipments when accepted by Saga.
+  source_operation: openapi/einride-book-openapi-original.yml#BookingService_ConfirmTour
+- name: cancel_tour
+  description: Cancel a truck tour booking.
+  source_operation: openapi/einride-book-openapi-original.yml#BookingService_CancelTour
+deployment:
+  mode: none
+  verified: derived
+  tools: 14
+  checked: '2026-08-12'
+  source: catalog MCP census

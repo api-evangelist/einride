@@ -1,0 +1,217 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Einride Extend: Authentication AuthenticationService BookingService API",
+    "version": "v1beta1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BookingService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List existing truck tours.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1beta1/:parent/tours",
+            "params": [
+              {
+                "name": "parent",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the parent, which owns this collection of tours.\nFormat: spaces/{space}"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Requested page size. Server may return fewer tours than requested.\nIf unspecified, server will pick an appropriate default."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "A token identifying a page of results the server should return.\nTypically, this is the value of ListToursResponse.page_token returned from the previous call to `ListTours` method."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "How the results should be sorted. Presently, the only permitted values are:\n\n- `\"create_time desc\"` (default if no order_by is specified)\n- `\"create_time asc\"`\nExample:\n```\norder_by = \"create_time desc\"\n``"
+              },
+              {
+                "name": "showDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Controls whether deleted tours should be returned. Defaults to false."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Allows to skip results."
+              }
+            ]
+          },
+          "docs": "This is an AIP standard [List](https://google.aip.dev/132) method."
+        },
+        {
+          "info": {
+            "name": "Search tours.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1beta1/:parent/tours:search",
+            "params": [
+              {
+                "name": "parent",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the parent, which owns this collection of tours.\nFormat: spaces/{space}"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Requested page size. Server may return fewer tours than requested.\nIf unspecified, server will pick an appropriate default."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\n[SearchToursResponse.page_token][einride.saga.book.v1.SearchToursResponse.page_token]\nreturned from the previous call to `SearchTours` method."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Allows for skipping result"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Filters\nMultiple filters will be combined with the logical operator AND.\n\nReturned tours contain the query string in ANY of the fields:\ntour_id, external_reference_id"
+              },
+              {
+                "name": "showDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Includes deleted tours in result"
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "How the results should be sorted. Presently, the only permitted values are:\n\n- `\"create_time asc\"` (default if no order_by is specified)\n- `\"create_time desc\"`\nExample:\n```\norder_by = \"create_time desc\"\n```"
+              }
+            ]
+          },
+          "docs": "Search for Tours in a space.\n- You can search for Tours by external_reference_id"
+        },
+        {
+          "info": {
+            "name": "Create a truck tour booking in a space.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1beta1/:space/tours",
+            "params": [
+              {
+                "name": "space",
+                "value": "",
+                "type": "path",
+                "description": "The parent space in which to create the tour."
+              }
+            ]
+          },
+          "docs": "This is an AIP standard [Create](https://google.aip.dev/133) method."
+        },
+        {
+          "info": {
+            "name": "Update a tour.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1beta1/:tour.name",
+            "params": [
+              {
+                "name": "tour.name",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the tour."
+              }
+            ]
+          },
+          "docs": "See: https://google.aip.dev/134 (Standard methods: Update).\nIf the tour has been confirmed, only a selection of fields can be updated: Stops.RequestedStartTime, Stops.RequestedEndTime, Annotations, PreliminaryShipments.Annotations."
+        },
+        {
+          "info": {
+            "name": "Get an existing truck tour booking.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1beta1/:tour",
+            "params": [
+              {
+                "name": "tour",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the tour to retrieve."
+              }
+            ]
+          },
+          "docs": "This is an AIP standard [Get](https://google.aip.dev/131) method."
+        },
+        {
+          "info": {
+            "name": "Cancel a tour.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1beta1/:tour:cancel",
+            "params": [
+              {
+                "name": "tour",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the tour to cancel."
+              }
+            ]
+          },
+          "docs": "Cancel a tour."
+        },
+        {
+          "info": {
+            "name": "Confirm a Provisional tour.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1beta1/:tour:confirm",
+            "params": [
+              {
+                "name": "tour",
+                "value": "",
+                "type": "path",
+                "description": "The resource name of the tour to confirm."
+              }
+            ]
+          },
+          "docs": "Reconfirming a tour that is already confirmed will return an InvalidArgument Error.\nWhen a tour has been accepted by Saga and confirmed by the user, Shipments will be created."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

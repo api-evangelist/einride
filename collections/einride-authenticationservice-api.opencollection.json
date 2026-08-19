@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Einride Extend: Authentication AuthenticationService API",
+    "version": "v1beta1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AuthenticationService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange secret for access token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1beta1/auth:exchangeSecret"
+          },
+          "docs": "Exchange secret for access token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
