@@ -43,6 +43,7 @@ tags:
 - Electric Vehicles
 - Shipping
 - gRPC
+- Sweden
 apis:
 - aid: einride:einride-authenticationservice-api
   name: Einride AuthenticationService API
