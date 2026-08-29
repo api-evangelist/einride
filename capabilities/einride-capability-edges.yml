@@ -1,0 +1,26 @@
+slug: einride
+provider: Einride
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: BookingService
+  spec_file: einride-bookingservice-api-openapi.yml
+  capability_id: BC-2400.40
+  capability_id_l1: BC-2400
+  capability_name: Booking and Reservation Management
+  confidence: 0.8
+  evidence: POST /v1beta1/{space}/tours BookingService_CreateTour Create a truck tour booking in a space.;
+    GET /v1beta1/{tour}:cancel BookingService_CancelTour; GET /v1beta1/{tour}:confirm BookingService_ConfirmTour
+    Confirm a Provisional tour.
+  reason: Creates, confirms, updates and cancels truck tour bookings — acceptance, modification and cancellation
+    of transport capacity bookings. Clear booking/reservation surface.
