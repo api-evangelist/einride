@@ -60,22 +60,6 @@ tags:
 - gRPC
 - Sweden
 apis:
-- aid: einride:einride-authenticationservice-api
-  name: Einride AuthenticationService API
-  description: The AuthenticationService API from Einride — 1 operation(s) for authenticationservice.
-  humanURL: https://extend.saga.einride.tech
-  baseURL: https://api.saga.einride.tech
-  tags:
-  - AuthenticationService
-  properties:
-  - type: OpenAPI
-    url: openapi/einride-authenticationservice-api-openapi.yml
-  - type: Protobuf
-    url: grpc/einride-auth-service.proto
-  - type: Protobuf
-    url: grpc/einride-booking-service.proto
-  - type: Protobuf
-    url: grpc/einride-shipment-service.proto
 - aid: einride:einride-bookingservice-api
   name: Einride BookingService API
   description: The BookingService API from Einride — 7 operation(s) for bookingservice.
@@ -102,6 +86,22 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/einride-shipmentservice-api-openapi.yml
+  - type: Protobuf
+    url: grpc/einride-auth-service.proto
+  - type: Protobuf
+    url: grpc/einride-booking-service.proto
+  - type: Protobuf
+    url: grpc/einride-shipment-service.proto
+- aid: einride:einride-authentication-service-api
+  name: Einride Authentication Service API
+  description: The Authentication Service API from Einride — 1 operation(s) for authentication service.
+  humanURL: https://extend.saga.einride.tech
+  baseURL: https://api.saga.einride.tech
+  tags:
+  - Authentication Service
+  properties:
+  - type: OpenAPI
+    url: openapi/einride-authentication-service-api-openapi.yml
   - type: Protobuf
     url: grpc/einride-auth-service.proto
   - type: Protobuf
