@@ -98,6 +98,8 @@ apis:
   humanURL: https://extend.saga.einride.tech
   baseURL: https://api.saga.einride.tech
   tags:
+  - AuthenticationService
+  tags_raw:
   - Authentication Service
   properties:
   - type: OpenAPI
