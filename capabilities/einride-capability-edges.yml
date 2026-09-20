@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 1
+edge_count: 2
 edges:
 - tag: BookingService
   spec_file: einride-bookingservice-api-openapi.yml
@@ -24,3 +24,15 @@ edges:
     Confirm a Provisional tour.
   reason: Creates, confirms, updates and cancels truck tour bookings — acceptance, modification and cancellation
     of transport capacity bookings. Clear booking/reservation surface.
+- tag: ShipmentService
+  spec_file: einride-shipmentservice-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.75
+  evidence: POST /v1beta1/{space}/shipments ShipmentService_CreateShipment  Create a shipment in a space;
+    POST /v1beta1/{shipment}:cancel
+  reason: Freight shipment booking lifecycle (create, update, cancel, release) is order fulfilment / logistics
+    execution within supply chain management. Choosing Order Fulfilment Management as shipments are booked
+    orders; Logistics Operations is an alternative reading, hence moderate confidence.
+  recovered_from: vertical-automotive-mobility-edges.json
