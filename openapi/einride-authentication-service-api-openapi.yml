@@ -1,0 +1,84 @@
+openapi: 3.2.0
+info:
+  title: 'Einride Extend: Authentication Authentication Service API'
+  description: Based on REST principles, with optional support for gRPC, the Einride Extend API enables modern API-based integration to Einride Saga.
+  version: v1beta1
+tags:
+- name: Authentication Service
+paths:
+  /v1beta1/auth:exchangeSecret:
+    post:
+      summary: Exchange secret for access token
+      operationId: AuthenticationService_ExchangeSecret
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1beta1ExchangeSecretResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      tags:
+      - Authentication Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1beta1ExchangeSecretRequest'
+        description: Request to the ExchangeSecret method.
+        required: true
+components:
+  schemas:
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v1beta1ExchangeSecretResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: 'Access token to pass as a Bearer token in the authorization header
+
+            on subsequent API calls.'
+        expireTime:
+          type: string
+          format: date-time
+          description: Expire time of the access token.
+          readOnly: true
+      description: Response from the ExchangeSecret method.
+    v1beta1ExchangeSecretRequest:
+      type: object
+      properties:
+        clientId:
+          type: string
+          format: string
+          description: The client ID.
+        clientSecret:
+          type: string
+          format: password
+          description: The client secret.
+      description: Request to the ExchangeSecret method.
+      required:
+      - clientId
+      - clientSecret
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'

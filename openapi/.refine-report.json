@@ -1,18 +1,29 @@
 {
   "provider": "einride",
   "sources": [
-    "einride-authenticationservice-api-openapi.yml",
-    "einride-bookingservice-api-openapi.yml",
-    "einride-shipmentservice-api-openapi.yml"
+    "_original/einride-auth-openapi-original.yml",
+    "_original/einride-book-openapi-original.yml"
   ],
   "outputs": [
     "einride-authenticationservice-api-openapi.yml",
     "einride-bookingservice-api-openapi.yml",
     "einride-shipmentservice-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "einride-auth-openapi-original.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "einride-book-openapi-original.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: einride-authentication-service-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 3 total)"
+  ],
+  "skipped": [
+    "einride-authentication-service-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "einride-bookingservice-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "einride-shipmentservice-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
