@@ -422,27 +422,98 @@ paths:
       - BookingService
 components:
   schemas:
-    UnitVolumeUnit:
+    v1beta1ListToursResponse:
+      type: object
+      properties:
+        tours:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1beta1Tour'
+          description: The list of tours. If there are none in the current page then this will be empty.
+        nextPageToken:
+          type: string
+          description: 'A token to retrieve next page of results.  Pass this value in the ListToursRequest.page_token field in the
+
+            subsequent call to `ListTours` method to retrieve the next page of results.'
+        totalSize:
+          type: integer
+          format: int32
+          description: The total size of tours found in a space.
+      description: Response message for TourService.ListTours.
+    v1beta1ShipmentState:
       type: string
       enum:
-      - CBM
-      - CBFT
-      description: "- CBM: Cubic meters\n - CBFT: Cubic feet"
-      title: Volume units
-    UnitWeight:
+      - ACTIVE
+      - RELEASED
+      - CANCELLED
+      description: "- ACTIVE: Shipment is active (initial state).\n - RELEASED: Shipment is ready for pickup.\n - CANCELLED: Shipment is cancelled"
+      title: Shipment state
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    ShipmentService:
+      type: string
+      enum:
+      - PALLET
+      - FTL
+      - DRAYAGE
+      description: "- PALLET: Pallet\n - FTL: Full truck load\n - DRAYAGE: Drayage is the transport of goods over a short distance also known as the \"The first mile.\""
+      title: Shipment service type
+    TourServiceType:
+      type: string
+      enum:
+      - FULL_TRUCK_LOAD
+      - DISTRIBUTION
+      - SHUTTLE
+      - MILK_RUN
+      - DRAYAGE
+      description: "The service type of the tour.\n\n - FULL_TRUCK_LOAD: Service type FTL.\n - DISTRIBUTION: Service type distribution.\n - SHUTTLE: Service type shuttle.\n - MILK_RUN: Service type milk run.\n - DRAYAGE: Service type drayage."
+    UnitVolume:
       type: object
       properties:
         value:
           type: number
           format: double
-          title: Weight value
+          title: Volume value
         unit:
-          $ref: '#/components/schemas/UnitWeightUnit'
-          title: Weight unit
-      title: Weight specified in different units
+          $ref: '#/components/schemas/UnitVolumeUnit'
+          title: Volume unit
+      title: Volume specified in different units
       required:
       - value
       - unit
+    v1beta1SearchToursResponse:
+      type: object
+      properties:
+        tours:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1beta1Tour'
+          description: The list of tours.
+        nextPageToken:
+          type: string
+          description: 'A token to retrieve next page of results. Pass this value in the
+
+            SearchToursRequest.page_token field in the subsequent call to `SearchTours` method
+
+            to retrieve the next page of results.'
+        totalSize:
+          type: integer
+          format: int32
+          description: The total size of tours found using the search filters.
+      description: Response message for TourService.SearchTours.
     v1beta1Shipment:
       type: object
       properties:
@@ -546,65 +617,19 @@ components:
       - sender
       - deliveryAddress
       - units
-    v1beta1ShipmentState:
+    TourStopType:
       type: string
       enum:
-      - ACTIVE
-      - RELEASED
-      - CANCELLED
-      description: "- ACTIVE: Shipment is active (initial state).\n - RELEASED: Shipment is ready for pickup.\n - CANCELLED: Shipment is cancelled"
-      title: Shipment state
-    UnitVolume:
-      type: object
-      properties:
-        value:
-          type: number
-          format: double
-          title: Volume value
-        unit:
-          $ref: '#/components/schemas/UnitVolumeUnit'
-          title: Volume unit
-      title: Volume specified in different units
-      required:
-      - value
-      - unit
-    TourStop:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/v1beta1Address'
-          description: The address of this stop.
-        stopType:
-          $ref: '#/components/schemas/TourStopType'
-          description: The type of stop.
-        instructions:
-          type: string
-          description: Instructions for this stop.
-        contactPerson:
-          type: string
-          description: The contact person for this stop.
-        requestedStartTime:
-          type: string
-          format: date-time
-          description: The earliest time to arrive this stop.
-        requestedEndTime:
-          type: string
-          format: date-time
-          description: The latest time to depart this stop.
-        shipmentExternalReferenceIds:
-          type: array
-          items:
-            type: string
-          description: 'The shipment external reference ids associated with this stop. E.g. for a pickup stop this will hold the shipments to pickup.
-
-            The external_reference_ids are defined in preliminary_shipments.'
-      description: A stop is an address where an event is going to happen. The event is either to pickup or deliver goods.
-      required:
-      - address
-      - stopType
-      - requestedStartTime
-      - requestedEndTime
-      - shipmentExternalReferenceIds
+      - PICKUP
+      - DELIVER
+      description: "Type describes the reason for the stop. E.g. a stop to deliver or pickup.\n\n - PICKUP: Stop to pick up goods.\n - DELIVER: Stop to deliver goods."
+    UnitVolumeUnit:
+      type: string
+      enum:
+      - CBM
+      - CBFT
+      description: "- CBM: Cubic meters\n - CBFT: Cubic feet"
+      title: Volume units
     v1beta1Address:
       type: object
       properties:
@@ -653,12 +678,6 @@ components:
       - postalCode
       - city
       - regionCode
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
     UnitLengthUnit:
       type: string
       enum:
@@ -666,126 +685,64 @@ components:
       - IN
       description: "- CM: Centimeters\n - IN: Inches"
       title: Length units
-    typeLatLng:
+    TourPreliminaryShipment:
       type: object
       properties:
-        latitude:
-          type: number
-          format: double
-          description: The latitude in degrees. It must be in the range [-90.0, +90.0].
-        longitude:
-          type: number
-          format: double
-          description: The longitude in degrees. It must be in the range [-180.0, +180.0].
-      description: 'An object that represents a latitude/longitude pair. This is expressed as a
-
-        pair of doubles to represent degrees latitude and degrees longitude. Unless
-
-        specified otherwise, this must conform to the
-
-        <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
-
-        standard</a>. Values must be within normalized ranges.'
-    ShipmentDeliveryState:
-      type: string
-      enum:
-      - AWAITING
-      - IN_TRANSIT
-      - DELIVERED
-      description: "- AWAITING: Shipment delivery hasn't started\n - IN_TRANSIT: Shipment is in transit\n - DELIVERED: Shipment is delivered"
-      title: Shipment delivery state
-    v1beta1ListToursResponse:
-      type: object
-      properties:
-        tours:
+        externalReferenceId:
+          type: string
+          description: A customer provided external reference id.
+        units:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/v1beta1Tour'
-          description: The list of tours. If there are none in the current page then this will be empty.
-        nextPageToken:
-          type: string
-          description: 'A token to retrieve next page of results.  Pass this value in the ListToursRequest.page_token field in the
-
-            subsequent call to `ListTours` method to retrieve the next page of results.'
-        totalSize:
-          type: integer
-          format: int32
-          description: The total size of tours found in a space.
-      description: Response message for TourService.ListTours.
-    UnitWeightUnit:
-      type: string
-      enum:
-      - KG
-      - LBS
-      description: "- KG: Kilograms\n - LBS: Pounds"
-      title: Weight units
-    TourAutomationRule:
-      type: string
-      enum:
-      - CREATE_SHIPMENTS
-      - CREATE_AND_RELEASE_SHIPMENTS
-      description: "The rule that is applied when a confirmed tour is accepted.\n\n - CREATE_SHIPMENTS: When the confirmed tour is accepted, shipments will be created automatically from its stops and units.\n - CREATE_AND_RELEASE_SHIPMENTS: When the confirmed tour is accepted, shipments will be created automatically from its stops and units\nand then released."
-    v1beta1TourState:
-      type: string
-      enum:
-      - PENDING
-      - ACCEPTED
-      - REJECTED
-      - CANCELLED
-      description: "The state of the tour.\n\n - PENDING: The tour is received. Awaiting accept/reject.\n - ACCEPTED: The tour is accepted.\n - REJECTED: The tour is rejected.\n - CANCELLED: The tour is cancelled."
-    bookv1beta1Unit:
+            $ref: '#/components/schemas/bookv1beta1Unit'
+          description: The units that should be shipped.
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+          description: Annotations for the shipment.
+      description: Customer provided information about a shipment associated with a tour that will be added to the created shipments.
+      required:
+      - externalReferenceId
+      - units
+    TourStop:
       type: object
       properties:
-        type:
+        address:
+          $ref: '#/components/schemas/v1beta1Address'
+          description: The address of this stop.
+        stopType:
+          $ref: '#/components/schemas/TourStopType'
+          description: The type of stop.
+        instructions:
           type: string
-          title: Type of unit
-        externalReferenceId:
+          description: Instructions for this stop.
+        contactPerson:
           type: string
-          title: External reference ID of the unit
-        description:
+          description: The contact person for this stop.
+        requestedStartTime:
           type: string
-          title: Description of the unit
-        trackingId:
+          format: date-time
+          description: The earliest time to arrive this stop.
+        requestedEndTime:
           type: string
-          title: Unique unit tracking ID
-          readOnly: true
-        weight:
-          $ref: '#/components/schemas/UnitWeight'
-          title: Unit weight
-        length:
-          $ref: '#/components/schemas/UnitLength'
-          title: Unit length
-        height:
-          $ref: '#/components/schemas/UnitLength'
-          title: Unit height
-        width:
-          $ref: '#/components/schemas/UnitLength'
-          title: Unit width
-        volume:
-          $ref: '#/components/schemas/UnitVolume'
-          title: Unit volume
-      description: A unit is a holder of goods such as a EUR-pallet.
+          format: date-time
+          description: The latest time to depart this stop.
+        shipmentExternalReferenceIds:
+          type: array
+          items:
+            type: string
+          description: 'The shipment external reference ids associated with this stop. E.g. for a pickup stop this will hold the shipments to pickup.
+
+            The external_reference_ids are defined in preliminary_shipments.'
+      description: A stop is an address where an event is going to happen. The event is either to pickup or deliver goods.
       required:
-      - type
-      - weight
-    TourServiceType:
-      type: string
-      enum:
-      - FULL_TRUCK_LOAD
-      - DISTRIBUTION
-      - SHUTTLE
-      - MILK_RUN
-      - DRAYAGE
-      description: "The service type of the tour.\n\n - FULL_TRUCK_LOAD: Service type FTL.\n - DISTRIBUTION: Service type distribution.\n - SHUTTLE: Service type shuttle.\n - MILK_RUN: Service type milk run.\n - DRAYAGE: Service type drayage."
-    ShipmentService:
-      type: string
-      enum:
-      - PALLET
-      - FTL
-      - DRAYAGE
-      description: "- PALLET: Pallet\n - FTL: Full truck load\n - DRAYAGE: Drayage is the transport of goods over a short distance also known as the \"The first mile.\""
-      title: Shipment service type
+      - address
+      - stopType
+      - requestedStartTime
+      - requestedEndTime
+      - shipmentExternalReferenceIds
     UnitLength:
       type: object
       properties:
@@ -800,19 +757,20 @@ components:
       required:
       - value
       - unit
-    rpcStatus:
+    ShipmentDeliveryState:
+      type: string
+      enum:
+      - AWAITING
+      - IN_TRANSIT
+      - DELIVERED
+      description: "- AWAITING: Shipment delivery hasn't started\n - IN_TRANSIT: Shipment is in transit\n - DELIVERED: Shipment is delivered"
+      title: Shipment delivery state
+    protobufAny:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        '@type':
           type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
+      additionalProperties: {}
     v1beta1Tour:
       type: object
       properties:
@@ -895,39 +853,102 @@ components:
       - serviceType
       - preliminaryShipments
       - stops
-    TourStopType:
-      type: string
-      enum:
-      - PICKUP
-      - DELIVER
-      description: "Type describes the reason for the stop. E.g. a stop to deliver or pickup.\n\n - PICKUP: Stop to pick up goods.\n - DELIVER: Stop to deliver goods."
+    UnitWeight:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          title: Weight value
+        unit:
+          $ref: '#/components/schemas/UnitWeightUnit'
+          title: Weight unit
+      title: Weight specified in different units
+      required:
+      - value
+      - unit
     TourTourType:
       type: string
       enum:
       - PROVISIONAL
       - CONFIRMED
       description: "The tour type.\n\n - PROVISIONAL: The tour is provisional and can be updated.\n - CONFIRMED: The tour is confirmed and can not be updated."
-    TourPreliminaryShipment:
+    typeLatLng:
       type: object
       properties:
+        latitude:
+          type: number
+          format: double
+          description: The latitude in degrees. It must be in the range [-90.0, +90.0].
+        longitude:
+          type: number
+          format: double
+          description: The longitude in degrees. It must be in the range [-180.0, +180.0].
+      description: 'An object that represents a latitude/longitude pair. This is expressed as a
+
+        pair of doubles to represent degrees latitude and degrees longitude. Unless
+
+        specified otherwise, this must conform to the
+
+        <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
+
+        standard</a>. Values must be within normalized ranges.'
+    bookv1beta1Unit:
+      type: object
+      properties:
+        type:
+          type: string
+          title: Type of unit
         externalReferenceId:
           type: string
-          description: A customer provided external reference id.
-        units:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/bookv1beta1Unit'
-          description: The units that should be shipped.
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-          description: Annotations for the shipment.
-      description: Customer provided information about a shipment associated with a tour that will be added to the created shipments.
+          title: External reference ID of the unit
+        description:
+          type: string
+          title: Description of the unit
+        trackingId:
+          type: string
+          title: Unique unit tracking ID
+          readOnly: true
+        weight:
+          $ref: '#/components/schemas/UnitWeight'
+          title: Unit weight
+        length:
+          $ref: '#/components/schemas/UnitLength'
+          title: Unit length
+        height:
+          $ref: '#/components/schemas/UnitLength'
+          title: Unit height
+        width:
+          $ref: '#/components/schemas/UnitLength'
+          title: Unit width
+        volume:
+          $ref: '#/components/schemas/UnitVolume'
+          title: Unit volume
+      description: A unit is a holder of goods such as a EUR-pallet.
       required:
-      - externalReferenceId
-      - units
+      - type
+      - weight
+    TourAutomationRule:
+      type: string
+      enum:
+      - CREATE_SHIPMENTS
+      - CREATE_AND_RELEASE_SHIPMENTS
+      description: "The rule that is applied when a confirmed tour is accepted.\n\n - CREATE_SHIPMENTS: When the confirmed tour is accepted, shipments will be created automatically from its stops and units.\n - CREATE_AND_RELEASE_SHIPMENTS: When the confirmed tour is accepted, shipments will be created automatically from its stops and units\nand then released."
+    UnitWeightUnit:
+      type: string
+      enum:
+      - KG
+      - LBS
+      description: "- KG: Kilograms\n - LBS: Pounds"
+      title: Weight units
+    v1beta1TourState:
+      type: string
+      enum:
+      - PENDING
+      - ACCEPTED
+      - REJECTED
+      - CANCELLED
+      description: "The state of the tour.\n\n - PENDING: The tour is received. Awaiting accept/reject.\n - ACCEPTED: The tour is accepted.\n - REJECTED: The tour is rejected.\n - CANCELLED: The tour is cancelled."
     v1beta1Vehicle:
       type: object
       properties:
@@ -943,27 +964,6 @@ components:
       title: Holds vehicle information
       required:
       - referenceId
-    v1beta1SearchToursResponse:
-      type: object
-      properties:
-        tours:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1beta1Tour'
-          description: The list of tours.
-        nextPageToken:
-          type: string
-          description: 'A token to retrieve next page of results. Pass this value in the
-
-            SearchToursRequest.page_token field in the subsequent call to `SearchTours` method
-
-            to retrieve the next page of results.'
-        totalSize:
-          type: integer
-          format: int32
-          description: The total size of tours found using the search filters.
-      description: Response message for TourService.SearchTours.
   securitySchemes:
     Authorization:
       type: apiKey

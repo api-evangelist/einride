@@ -34,12 +34,6 @@ paths:
         required: true
 components:
   schemas:
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
     v1beta1ExchangeSecretResponse:
       type: object
       properties:
@@ -69,6 +63,12 @@ components:
       required:
       - clientId
       - clientSecret
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
     rpcStatus:
       type: object
       properties:

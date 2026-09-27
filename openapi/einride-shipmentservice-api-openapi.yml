@@ -364,24 +364,46 @@ paths:
         required: true
 components:
   schemas:
-    UnitVolumeUnit:
+    v1beta1ShipmentState:
       type: string
       enum:
-      - CBM
-      - CBFT
-      description: "- CBM: Cubic meters\n - CBFT: Cubic feet"
-      title: Volume units
-    UnitWeight:
+      - ACTIVE
+      - RELEASED
+      - CANCELLED
+      description: "- ACTIVE: Shipment is active (initial state).\n - RELEASED: Shipment is ready for pickup.\n - CANCELLED: Shipment is cancelled"
+      title: Shipment state
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    ShipmentService:
+      type: string
+      enum:
+      - PALLET
+      - FTL
+      - DRAYAGE
+      description: "- PALLET: Pallet\n - FTL: Full truck load\n - DRAYAGE: Drayage is the transport of goods over a short distance also known as the \"The first mile.\""
+      title: Shipment service type
+    UnitVolume:
       type: object
       properties:
         value:
           type: number
           format: double
-          title: Weight value
+          title: Volume value
         unit:
-          $ref: '#/components/schemas/UnitWeightUnit'
-          title: Weight unit
-      title: Weight specified in different units
+          $ref: '#/components/schemas/UnitVolumeUnit'
+          title: Volume unit
+      title: Volume specified in different units
       required:
       - value
       - unit
@@ -488,37 +510,13 @@ components:
       - sender
       - deliveryAddress
       - units
-    ShipmentServiceReleaseShipmentBody:
-      type: object
-      description: Request message for BookService.ReleaseShipment.
-    v1beta1ShipmentState:
+    UnitVolumeUnit:
       type: string
       enum:
-      - ACTIVE
-      - RELEASED
-      - CANCELLED
-      description: "- ACTIVE: Shipment is active (initial state).\n - RELEASED: Shipment is ready for pickup.\n - CANCELLED: Shipment is cancelled"
-      title: Shipment state
-    UnitVolume:
-      type: object
-      properties:
-        value:
-          type: number
-          format: double
-          title: Volume value
-        unit:
-          $ref: '#/components/schemas/UnitVolumeUnit'
-          title: Volume unit
-      title: Volume specified in different units
-      required:
-      - value
-      - unit
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
+      - CBM
+      - CBFT
+      description: "- CBM: Cubic meters\n - CBFT: Cubic feet"
+      title: Volume units
     v1beta1Address:
       type: object
       properties:
@@ -574,6 +572,51 @@ components:
       - IN
       description: "- CM: Centimeters\n - IN: Inches"
       title: Length units
+    UnitLength:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          title: Length value
+        unit:
+          $ref: '#/components/schemas/UnitLengthUnit'
+          title: Length unit
+      title: Length specified in different units
+      required:
+      - value
+      - unit
+    ShipmentDeliveryState:
+      type: string
+      enum:
+      - AWAITING
+      - IN_TRANSIT
+      - DELIVERED
+      description: "- AWAITING: Shipment delivery hasn't started\n - IN_TRANSIT: Shipment is in transit\n - DELIVERED: Shipment is delivered"
+      title: Shipment delivery state
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    UnitWeight:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          title: Weight value
+        unit:
+          $ref: '#/components/schemas/UnitWeightUnit'
+          title: Weight unit
+      title: Weight specified in different units
+      required:
+      - value
+      - unit
+    ShipmentServiceReleaseShipmentBody:
+      type: object
+      description: Request message for BookService.ReleaseShipment.
     typeLatLng:
       type: object
       properties:
@@ -594,29 +637,6 @@ components:
         <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
 
         standard</a>. Values must be within normalized ranges.'
-    ShipmentDeliveryState:
-      type: string
-      enum:
-      - AWAITING
-      - IN_TRANSIT
-      - DELIVERED
-      description: "- AWAITING: Shipment delivery hasn't started\n - IN_TRANSIT: Shipment is in transit\n - DELIVERED: Shipment is delivered"
-      title: Shipment delivery state
-    UnitWeightUnit:
-      type: string
-      enum:
-      - KG
-      - LBS
-      description: "- KG: Kilograms\n - LBS: Pounds"
-      title: Weight units
-    ShipmentService:
-      type: string
-      enum:
-      - PALLET
-      - FTL
-      - DRAYAGE
-      description: "- PALLET: Pallet\n - FTL: Full truck load\n - DRAYAGE: Drayage is the transport of goods over a short distance also known as the \"The first mile.\""
-      title: Shipment service type
     bookv1beta1Unit:
       type: object
       properties:
@@ -652,33 +672,6 @@ components:
       required:
       - type
       - weight
-    UnitLength:
-      type: object
-      properties:
-        value:
-          type: number
-          format: double
-          title: Length value
-        unit:
-          $ref: '#/components/schemas/UnitLengthUnit'
-          title: Length unit
-      title: Length specified in different units
-      required:
-      - value
-      - unit
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
     v1beta1ListShipmentsResponse:
       type: object
       properties:
@@ -698,6 +691,16 @@ components:
           format: int32
           description: The total size of shipments found in a space.
       description: Response message for ShipmentService.ListShipments.
+    UnitWeightUnit:
+      type: string
+      enum:
+      - KG
+      - LBS
+      description: "- KG: Kilograms\n - LBS: Pounds"
+      title: Weight units
+    ShipmentServiceCancelShipmentBody:
+      type: object
+      description: Request message for BookService.CancelShipment.
     v1beta1Vehicle:
       type: object
       properties:
@@ -713,9 +716,6 @@ components:
       title: Holds vehicle information
       required:
       - referenceId
-    ShipmentServiceCancelShipmentBody:
-      type: object
-      description: Request message for BookService.CancelShipment.
   securitySchemes:
     Authorization:
       type: apiKey
