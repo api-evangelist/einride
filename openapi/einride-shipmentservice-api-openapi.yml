@@ -364,35 +364,9 @@ paths:
         required: true
 components:
   schemas:
-    v1beta1ShipmentState:
-      type: string
-      enum:
-      - ACTIVE
-      - RELEASED
-      - CANCELLED
-      description: "- ACTIVE: Shipment is active (initial state).\n - RELEASED: Shipment is ready for pickup.\n - CANCELLED: Shipment is cancelled"
-      title: Shipment state
-    rpcStatus:
+    ShipmentServiceReleaseShipmentBody:
       type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
-    ShipmentService:
-      type: string
-      enum:
-      - PALLET
-      - FTL
-      - DRAYAGE
-      description: "- PALLET: Pallet\n - FTL: Full truck load\n - DRAYAGE: Drayage is the transport of goods over a short distance also known as the \"The first mile.\""
-      title: Shipment service type
+      description: Request message for BookService.ReleaseShipment.
     UnitVolume:
       type: object
       properties:
@@ -407,6 +381,56 @@ components:
       required:
       - value
       - unit
+    v1beta1ShipmentState:
+      type: string
+      enum:
+      - ACTIVE
+      - RELEASED
+      - CANCELLED
+      description: "- ACTIVE: Shipment is active (initial state).\n - RELEASED: Shipment is ready for pickup.\n - CANCELLED: Shipment is cancelled"
+      title: Shipment state
+    v1beta1Vehicle:
+      type: object
+      properties:
+        referenceId:
+          type: string
+          title: Reference id
+        driverReferenceId:
+          type: string
+          title: Driver reference id
+        carrierReferenceId:
+          type: string
+          title: Carrier reference id
+      title: Holds vehicle information
+      required:
+      - referenceId
+    ShipmentDeliveryState:
+      type: string
+      enum:
+      - AWAITING
+      - IN_TRANSIT
+      - DELIVERED
+      description: "- AWAITING: Shipment delivery hasn't started\n - IN_TRANSIT: Shipment is in transit\n - DELIVERED: Shipment is delivered"
+      title: Shipment delivery state
+    v1beta1ListShipmentsResponse:
+      type: object
+      properties:
+        shipments:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1beta1Shipment'
+          description: The list of shipments.
+        nextPageToken:
+          type: string
+          description: 'A token to retrieve next page of results.  Pass this value in the ListShipmentsRequest.page_token field in the
+
+            subsequent call to `ListShipments` method to retrieve the next page of results.'
+        totalSize:
+          type: integer
+          format: int32
+          description: The total size of shipments found in a space.
+      description: Response message for ShipmentService.ListShipments.
     v1beta1Shipment:
       type: object
       properties:
@@ -517,6 +541,34 @@ components:
       - CBFT
       description: "- CBM: Cubic meters\n - CBFT: Cubic feet"
       title: Volume units
+    UnitWeight:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          title: Weight value
+        unit:
+          $ref: '#/components/schemas/UnitWeightUnit'
+          title: Weight unit
+      title: Weight specified in different units
+      required:
+      - value
+      - unit
+    UnitLength:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          title: Length value
+        unit:
+          $ref: '#/components/schemas/UnitLengthUnit'
+          title: Length unit
+      title: Length specified in different units
+      required:
+      - value
+      - unit
     v1beta1Address:
       type: object
       properties:
@@ -565,78 +617,6 @@ components:
       - postalCode
       - city
       - regionCode
-    UnitLengthUnit:
-      type: string
-      enum:
-      - CM
-      - IN
-      description: "- CM: Centimeters\n - IN: Inches"
-      title: Length units
-    UnitLength:
-      type: object
-      properties:
-        value:
-          type: number
-          format: double
-          title: Length value
-        unit:
-          $ref: '#/components/schemas/UnitLengthUnit'
-          title: Length unit
-      title: Length specified in different units
-      required:
-      - value
-      - unit
-    ShipmentDeliveryState:
-      type: string
-      enum:
-      - AWAITING
-      - IN_TRANSIT
-      - DELIVERED
-      description: "- AWAITING: Shipment delivery hasn't started\n - IN_TRANSIT: Shipment is in transit\n - DELIVERED: Shipment is delivered"
-      title: Shipment delivery state
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    UnitWeight:
-      type: object
-      properties:
-        value:
-          type: number
-          format: double
-          title: Weight value
-        unit:
-          $ref: '#/components/schemas/UnitWeightUnit'
-          title: Weight unit
-      title: Weight specified in different units
-      required:
-      - value
-      - unit
-    ShipmentServiceReleaseShipmentBody:
-      type: object
-      description: Request message for BookService.ReleaseShipment.
-    typeLatLng:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-          description: The latitude in degrees. It must be in the range [-90.0, +90.0].
-        longitude:
-          type: number
-          format: double
-          description: The longitude in degrees. It must be in the range [-180.0, +180.0].
-      description: 'An object that represents a latitude/longitude pair. This is expressed as a
-
-        pair of doubles to represent degrees latitude and degrees longitude. Unless
-
-        specified otherwise, this must conform to the
-
-        <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
-
-        standard</a>. Values must be within normalized ranges.'
     bookv1beta1Unit:
       type: object
       properties:
@@ -672,25 +652,44 @@ components:
       required:
       - type
       - weight
-    v1beta1ListShipmentsResponse:
+    typeLatLng:
       type: object
       properties:
-        shipments:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1beta1Shipment'
-          description: The list of shipments.
-        nextPageToken:
-          type: string
-          description: 'A token to retrieve next page of results.  Pass this value in the ListShipmentsRequest.page_token field in the
+        latitude:
+          type: number
+          format: double
+          description: The latitude in degrees. It must be in the range [-90.0, +90.0].
+        longitude:
+          type: number
+          format: double
+          description: The longitude in degrees. It must be in the range [-180.0, +180.0].
+      description: 'An object that represents a latitude/longitude pair. This is expressed as a
 
-            subsequent call to `ListShipments` method to retrieve the next page of results.'
-        totalSize:
-          type: integer
-          format: int32
-          description: The total size of shipments found in a space.
-      description: Response message for ShipmentService.ListShipments.
+        pair of doubles to represent degrees latitude and degrees longitude. Unless
+
+        specified otherwise, this must conform to the
+
+        <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
+
+        standard</a>. Values must be within normalized ranges.'
+    UnitLengthUnit:
+      type: string
+      enum:
+      - CM
+      - IN
+      description: "- CM: Centimeters\n - IN: Inches"
+      title: Length units
+    ShipmentService:
+      type: string
+      enum:
+      - PALLET
+      - FTL
+      - DRAYAGE
+      description: "- PALLET: Pallet\n - FTL: Full truck load\n - DRAYAGE: Drayage is the transport of goods over a short distance also known as the \"The first mile.\""
+      title: Shipment service type
+    ShipmentServiceCancelShipmentBody:
+      type: object
+      description: Request message for BookService.CancelShipment.
     UnitWeightUnit:
       type: string
       enum:
@@ -698,24 +697,25 @@ components:
       - LBS
       description: "- KG: Kilograms\n - LBS: Pounds"
       title: Weight units
-    ShipmentServiceCancelShipmentBody:
-      type: object
-      description: Request message for BookService.CancelShipment.
-    v1beta1Vehicle:
+    protobufAny:
       type: object
       properties:
-        referenceId:
+        '@type':
           type: string
-          title: Reference id
-        driverReferenceId:
+      additionalProperties: {}
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
           type: string
-          title: Driver reference id
-        carrierReferenceId:
-          type: string
-          title: Carrier reference id
-      title: Holds vehicle information
-      required:
-      - referenceId
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
   securitySchemes:
     Authorization:
       type: apiKey
