@@ -34,6 +34,20 @@ paths:
         required: true
 components:
   schemas:
+    v1beta1ExchangeSecretResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: 'Access token to pass as a Bearer token in the authorization header
+
+            on subsequent API calls.'
+        expireTime:
+          type: string
+          format: date-time
+          description: Expire time of the access token.
+          readOnly: true
+      description: Response from the ExchangeSecret method.
     rpcStatus:
       type: object
       properties:
@@ -53,20 +67,6 @@ components:
         '@type':
           type: string
       additionalProperties: {}
-    v1beta1ExchangeSecretResponse:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          description: 'Access token to pass as a Bearer token in the authorization header
-
-            on subsequent API calls.'
-        expireTime:
-          type: string
-          format: date-time
-          description: Expire time of the access token.
-          readOnly: true
-      description: Response from the ExchangeSecret method.
     v1beta1ExchangeSecretRequest:
       type: object
       properties:
