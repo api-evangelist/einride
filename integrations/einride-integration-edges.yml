@@ -29,6 +29,78 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Buf Schema Registry (BSR) public modules
+  partner: buf
+  partner_match: register-name
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: third-party
+  evidence: https://buf.build/einride
+  category: Protocol Buffers schema publishing (BSR)
+  contract_reference:
+    register: Buf Schema Registry (BSR) public modules
+    spec_file: null
+    standard: Protocol Buffers
+    role: schema-publisher
+    registrations:
+    - registered_name: einride
+      register_status: public-modules
+      evidence_url: https://buf.build/einride
+      matched_domain: null
+      matched_by: register-name
+      register_name_note: register-name 'einride' = einride; wikidata P856 einride.tech agrees or unheld
+    modules:
+    - module: buf.build/einride/aip
+      state: active
+      lapsed: false
+      created: '2021-08-24'
+    - module: buf.build/einride/aip-cli
+      state: active
+      lapsed: false
+      created: '2022-07-26'
+    - module: buf.build/einride/extend
+      state: active
+      lapsed: false
+      created: '2022-05-15'
+    - module: buf.build/einride/googleapis
+      state: active
+      lapsed: false
+      created: '2022-09-07'
+    - module: buf.build/einride/grpc-service-config
+      state: active
+      lapsed: false
+      created: '2022-07-06'
+    - module: buf.build/einride/iam
+      state: active
+      lapsed: false
+      created: '2021-04-22'
+    - module: buf.build/einride/protobuf-decap-cms
+      state: active
+      lapsed: false
+      created: '2024-07-09'
+    - module: buf.build/einride/protobuf-netlify-cms
+      state: active
+      lapsed: false
+      created: '2023-01-08'
+    - module: buf.build/einride/protoc-gen-bq-schema
+      state: active
+      lapsed: false
+      created: '2023-07-04'
+    - module: buf.build/einride/sensitive
+      state: active
+      lapsed: false
+      created: '2022-02-05'
+    signal_note: 'participation only: the owner publishes Protocol Buffers schema modules on the public BSR; a listing
+      is not conformance (no certified_products)'
+    detected_by: sweep-buf-schema-registry.py
+    detected: '2026-10-23'
+    matched_by: register-name
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  detected_by: sweep-buf-schema-registry.py
+  first_seen: '2026-10-23'
 generated: '2026-10-18'
 method: searched
 source:
@@ -47,3 +119,6 @@ checked:
 - https://registry.npmjs.org
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
+- https://buf.build/buf.registry.module.v1.ModuleService/ListModules
+- https://buf.build/buf.registry.owner.v1.OwnerService/GetOwners
+- https://buf.build/explore
