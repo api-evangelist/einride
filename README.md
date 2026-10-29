@@ -64,6 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Einride is a company surfaced as a portfolio company of eqt-ventures, northzone and added to the API Evangelist network as a stub for enrichment. Sector: sustainable-transport. This profile is a lead awaiting the enrichment pipeline.
+Einride is a Swedish freight technology company delivering an end-to-end platform for electric and autonomous road freight, combining purpose-built autonomous trucks, electric vehicles, smart charging, and the Saga operating software. Its developer-facing product, Einride Extend, exposes open, resource-oriented APIs (designed with Google AIP) over both gRPC and HTTP for booking truck tours and creating, releasing, and tracking shipments. The Extend APIs are alpha (v1beta1) and offered to select developers during an early-access phase, with a saga CLI, Buf Schema Registry proto module, and React UI component library. Einride serves customers including PepsiCo, Heineken, and DP World across Europe, the US, and the Middle East.
 
-Backed by: eqt-ventures, northzone — https://www.einride.tech/
+**Areas:** Company · Sustainable Transport · Freight · Logistics · Autonomous Vehicles · Electric Vehicles · Shipping · gRPC · Sweden
+
+## Einride on APIs.io
+
+Everything profiled for Einride is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/einride/](https://apis.io/providers/einride/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [Einride BookingService API](https://apis.io/apis/einride/einride-bookingservice-api/) — The BookingService API from Einride — 7 operation(s) for bookingservice.
+- [Einride ShipmentService API](https://apis.io/apis/einride/einride-shipmentservice-api/) — The ShipmentService API from Einride — 6 operation(s) for shipmentservice.
+- [Einride Authentication Service API](https://apis.io/apis/einride/einride-authentication-service-api/) — The Authentication Service API from Einride — 1 operation(s) for authentication service.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [einride-saga](https://apis.io/servers/einride/einride-saga/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Einride Agentic Access](https://apis.io/agentic-access/einride/einride-agentic-access/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Einride Extend: Authentication AuthenticationService API](https://apis.io/collections/einride/open-einride-authenticationservice-api/)
+- [Einride Extend: Authentication AuthenticationService BookingService API](https://apis.io/collections/einride/open-einride-bookingservice-api/)
+- [Einride Extend: Authentication AuthenticationService ShipmentService API](https://apis.io/collections/einride/open-einride-shipmentservice-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Einride Auth Overlay](https://apis.io/overlays/einride/einride-auth-overlay/)
+- [Einride Book Overlay](https://apis.io/overlays/einride/einride-book-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Einride Authentication](https://apis.io/security/einride/einride-authentication/)
+- [Einride Domain Security](https://apis.io/security/einride/einride-domain-security/)
+- [Einride Vulnerability Disclosure](https://apis.io/security/einride/einride-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.einride.tech/)
+- [Documentation](https://github.com/einride/extend/blob/master/docs/apis.md)
+- [API reference](https://extend.saga.einride.tech)
+- [Sign up](https://forms.gle/Sn3CYSgUgJbJE78X9)
+- [Support](https://www.einride.tech/contact)
+- [Blog](https://einride.engineering/blog)
+- [Security](https://www.einride.tech/security/vulnerability-disclosure-policy)
+- [Privacy policy](https://www.einride.tech/privacy/privacy-policy)
+- [GitHub](https://github.com/einride)
+
+## API Evangelist rating
+
+**Kin Score 38.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 37.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 23.7 |
+
+**Agent readiness 20.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 26.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/einride/](https://apis.io/providers/einride/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Einride: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/einride/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
